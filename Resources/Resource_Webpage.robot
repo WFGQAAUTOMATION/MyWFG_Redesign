@@ -76,6 +76,11 @@ Click OK Button On Java Dialog
 #*****************************************************
 #*****************************************************
 
+Click Redesigned Menu
+    click element  //a[@id='menu-toggle']
+
+#*****************************************************
+
 Click Object Named "${clickelement}"
     click element    xpath=//a[(text()='${clickelement}')]
 

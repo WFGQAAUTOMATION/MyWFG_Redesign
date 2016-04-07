@@ -1,5 +1,5 @@
 # Login Variables
-BROWSER = "ff"
+BROWSER = "gc"
 DELAY = 0
 SERVER = "m-www.mywfg.com"
 LOGIN_URL = "https://m-www.mywfg.com/Users/Account/AccessDenied?ReturnUrl=%2f"
@@ -10,6 +10,7 @@ LOGIN_TITLE = "MyWFG - Log In"
 VALID_USER = "1708W"
 VALID_PASSWORD = "81u3$ky"
 PREF_USER_ID = "3330T"
+SUBMIT_LOGIN = "Log In"
 
 # Lifeline Variables
 WFG_DATABASE = "WFGOnline"
