@@ -25,7 +25,7 @@ Valid Login - Click Menu Item
     Then Click Redesigned Menu
     Then Wait "5" Seconds
     And Click Link Named "Dashboard"
-	 Then Wait "5" Seconds
+	Then Wait "5" Seconds
 
 Invalid Login - Bad Password
     Given Browser is opened to login page

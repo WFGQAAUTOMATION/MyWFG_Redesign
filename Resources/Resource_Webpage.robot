@@ -76,8 +76,13 @@ Click OK Button On Java Dialog
 #*****************************************************
 #*****************************************************
 
+Click My Profile
+	click element  xpath=//span[(text()='My profile')]
+
+#*****************************************************
+
 Click Redesigned Menu
-    click element  //a[@id='menu-toggle']
+    click element  xpath=//a[@id='menu-toggle']
 
 #*****************************************************
 
@@ -102,7 +107,7 @@ Click Button using id "${buttonid}"
 #*****************************************************
 
 Click Link Named "${clicklick}"
-    click link    xpath=//a[(text()='${clicklick}')]
+    click link    xpath=//*[(text()='${clicklick}')]
 
 #*****************************************************
 
