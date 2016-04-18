@@ -9,13 +9,12 @@ Resource          ../../../Resources/Resource_Webpage.robot
 Library           ../../../Resources/Testing_Library.py
 Library           Selenium2Library
 Force Tags        Dev_Sanity
-Suite Teardown     Close Browser
+#Suite Teardown     Close Browser
 
 *** Variables ***
 
 
 *** Test Cases ***
-
 Login to MyWFG.com
     Given browser is opened to login page
     When user "${PREF_USER_ID}" logs in with password "${VALID_PASSWORD}"
@@ -23,22 +22,22 @@ Login to MyWFG.com
     sleep   4s
 
 Go to Profile My Preference Page
-    Hover Over "Profile"
-    Wait "3" Seconds
-    Click Menu Item "My Preferences"
-    sleep   3s
+    Then Click My Profile
+    And Wait "3" Seconds
+    Then Click Link Named "My Profile"
+    sleep  5s
 
 Verify Webpage
-    And Verify A Link Named "View Disclosure" Is On The Page
-    sleep   3s
+    And Verify A Link Named "Electronic 1099-Misc" Is On The Page
+    sleep   2s
 
 Click View Disclosure
-    Click link with name contained "View Disclosure"
+    Click link with name contained "Electronic 1099-Misc"
 
-Click Close Disclosure button
-   Click element    xpath=//span[@class="ui-button-text"][contains(text(),'Close')]
-
-#************************************************************************************
+#Click Close Disclosure button
+#   Click element    xpath=//span[@class="ui-button-text"][contains(text(),'Close')]
+#
+##************************************************************************************
 Run Opt In
     ${passed} =     run keyword and return status    Click button named "Opt In"
     ${button_option} =    check_opt_in_option    ${passed}
@@ -49,21 +48,21 @@ Run Opt In
     Run Keyword If    "${button_option}" == "Enabled"    Click button named "Opt In"
     Run Keyword If    "${button_option}" == "Enabled"    Scroll Page To Location    0    450
     Run Keyword If    "${button_option}" == "Enabled"    sleep   2s
-    Run Keyword If    "${button_option}" == "Enabled"    Click button named "Agree"
-    Run Keyword If    "${button_option}" == "Enabled"    sleep   2s
+#    Run Keyword If    "${button_option}" == "Enabled"    Click button named "Agree"
+#    Run Keyword If    "${button_option}" == "Enabled"    sleep   2s
 
-Run Opt Out
-    Click button named "Opt Out"
-    sleep    3s
-    Click Cancel on Alert
-    sleep    3s
-    Click button named "Opt Out"
-    sleep    3s
-    Click Ok on Alert
-
-Log Out of MyWFG
-    sleep    3s
-    Log Out of MyWFG
+#Run Opt Out
+#    Click button named "Opt Out"
+#    sleep    3s
+#    Click Cancel on Alert
+#    sleep    3s
+#    Click button named "Opt Out"
+#    sleep    3s
+#    Click Ok on Alert
+#
+#Log Out of MyWFG
+#    sleep    3s
+#    Log Out of MyWFG
 
 *** Keywords ***
 

@@ -18,12 +18,13 @@ Library           Testing_Library.py
 #${WELCOME_URL}       https://${SERVER}/
 #${ERROR_URL}         https://${SERVER}/Users/Account/LogOn?ReturnUrl=%2F
 #${linkname}          REPORTS
-#${PREF_USER_ID}           3330T
-
+#${PREF_USER_ID}      3330T
+#${FF_PROFILE}         C:/Users/tcoffey/AppData/Roaming/Mozilla/Firefox/Profiles/97ie54aj.default-1426774614925
+${FF_PROFILE}         C:/ff_profile
 *** Keywords ***
 
 Open Browser To Login Page
-    Open Browser    ${LOGIN_URL}    ${BROWSER}   ff_profile_dir=${FF_PROFILE_DIR}    #None    http://161.179.241.85:4444/wd/hub
+    Open Browser    ${LOGIN_URL}    ${BROWSER}      ff_profile_dir=${FF_PROFILE}      #None    http://161.179.241.85:4444/wd/hub
     Maximize Browser Window
     Set Selenium Speed    ${DELAY}
     Login Page Should Be Open
