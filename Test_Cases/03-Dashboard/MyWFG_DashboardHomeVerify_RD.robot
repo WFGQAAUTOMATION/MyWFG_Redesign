@@ -15,11 +15,15 @@ Login to MyWFG.com
     Then Home Page Should Be Open
 
 Go to Dashboard Page
-    And Verify A Link Named "Home" Is On The Page
-    Then Select Menu Item "Dashboard"
+    Then Click Redesigned Menu
+    Then Wait "3" Seconds
+    And Click Link Named "Commissions & Reports"
+    Then Wait "3" Seconds
+    Then Click Link Named "Dashboard"
+    Then Wait "3" Seconds
 
 Verify Dashboard Page is Opened
-    And Element Header "Business Profile" Should Be Present
+    And Element Header "Dashboard" Should Be Present
 
 Log Out and Close Browser
     Then log out of mywfg

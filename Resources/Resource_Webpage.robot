@@ -107,8 +107,8 @@ Click Button using id "${buttonid}"
 
 #*****************************************************
 
-Click Link Named "${clicklick}"
-    click link    xpath=//*[(text()='${clicklick}')]
+Click Link Named "${clicklink}"
+    click link    xpath=//a[contains(text(),'${clicklink}')]
 
 #*****************************************************
 
