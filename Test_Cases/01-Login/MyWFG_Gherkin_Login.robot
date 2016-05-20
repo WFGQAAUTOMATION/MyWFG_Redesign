@@ -24,7 +24,7 @@ Valid Login - Click Menu Item
     Then Home Page Should Be Open
     Then Click Redesigned Menu
     Then Wait "5" Seconds
-    And Click Link Named "Dashboard"
+    And Click Link Named "Events & Recognition"
 	Then Wait "5" Seconds
 
 Invalid Login - Bad Password
