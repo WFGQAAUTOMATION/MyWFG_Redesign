@@ -13,20 +13,21 @@ Login to MyWFG.com
     Given browser is opened to login page
     When user "${VALID_USER}" logs in with password "${VALID_PASSWORD}"
     Then Home Page Should Be Open
-    And Verify A Link Named "Home" Is On The Page
 
-Hover over Home
-    Then Hover Over "Home"
-    Then Wait "3" Seconds
+Click on Menu
+	And Click Redesigned Menu
+	Then Wait "5" Seconds
 
-Click Home Office Contacts
-    Then Go To   http://${SERVER}/home-office-contacts
+Click TFA > TFA Admin > TFA Home Office Contacts
+	And Click Link Named "TFA"
+	Then Click Link Named "TFA Administration"
+	Then Click Link Named "TFA Home Office Contacts"
 
 Check Info on Home Office Contacts page
     And Find "Home Office Contacts" On Webpage
     And Find "770.246.9889" On Webpage
     And Find "416.225.2121" On Webpage
-    And Find "678.966.6161" On Webpage
+    And Find "678.474.4208" On Webpage
 
 Log Out and Close Browser
     Then log out of mywfg

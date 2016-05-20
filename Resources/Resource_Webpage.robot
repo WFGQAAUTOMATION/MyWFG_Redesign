@@ -45,7 +45,8 @@ Select Menu Item "${clickelement}"
 #*****************************************************
 
 Log Out of MyWFG
-    click link    xpath=//a[@href="/Wfg.MyWfgLogin/Account/LogOff"]
+    click element     xpath=//li[3]/a/span
+	click link     xpath=//*[(text()='Log Out')]
 
 #*****************************************************
 
@@ -193,6 +194,11 @@ Find "${textonpage}" On Webpage
 
 Find "${AgentID}" in the Results List
     element should be visible    xpath=//a[@href="javascript:showAgentReports('${AgentID}')"]
+
+#*****************************************************
+
+Element "${elementname}" Should Be Present
+    element should be visible    //*[contains(text(),'${elementname}')]
 
 #*****************************************************
 
