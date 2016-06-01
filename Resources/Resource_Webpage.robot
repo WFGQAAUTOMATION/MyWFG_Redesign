@@ -44,12 +44,6 @@ Select Menu Item "${clickelement}"
 
 #*****************************************************
 
-Log Out of MyWFG
-    click element     xpath=//li[3]/a/span
-	click link     xpath=//*[(text()='Log Out')]
-
-#*****************************************************
-
 Wait "${seconds}" Seconds
     set selenium implicit wait  ${seconds}
 
@@ -78,7 +72,14 @@ Click OK Button On Java Dialog
 #*****************************************************
 
 Click My Profile
-	click element  xpath=//span[(text()='My profile')]
+	click element     xpath=//li[3]/a/span
+	click link     xpath=//*[@id='my-profile-dropup']/div/div[2]/ul/li[1]/a
+
+#*****************************************************
+
+Log Out of MyWFG
+    click element     xpath=//li[3]/a/span
+	click link     xpath=//*[(text()='Log Out')]
 
 #*****************************************************
 
@@ -87,8 +88,7 @@ Click Redesigned Menu
 
 #*****************************************************
 
-Click Object Named "${clickelement}"
-    click element    xpath=//a[(text()='${clickelement}')]
+Click Object Named "${clickelement}"log out
 
 #*****************************************************
 
