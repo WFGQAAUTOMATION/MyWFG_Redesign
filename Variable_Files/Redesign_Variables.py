@@ -11,7 +11,7 @@ LOGIN_TITLE = "MyWFG - Log In"
 VALID_USER = "1708W"
 VALID_PASSWORD = "81u3$ky"
 PREF_USER_ID = "3163T"
-SUBMIT_LOGIN = "Log In"
+SUBMIT_LOGIN = "Log in"
 
 # Lifeline Variables
 WFG_DATABASE = "WFGOnline"

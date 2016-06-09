@@ -72,7 +72,7 @@ Click OK Button On Java Dialog
 #*****************************************************
 
 Click My Profile
-	click element     xpath=//li[3]/a/span
+	click element     xpath=html/body/footer/div/ul/li[3]/a/span
 	click link     xpath=//*[@id='my-profile-dropup']/div/div[2]/ul/li[1]/a
 
 #*****************************************************
