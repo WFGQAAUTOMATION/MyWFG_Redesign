@@ -62,16 +62,23 @@ Scroll Page to Location Where Y equals "${y_location}"
 
 Click OK Button On Java Dialog
     Execute JavaScript    window.close()
-#    driver.findelement(By.xpath("//span[@class="ui-button-text"][contains(text(),'Ok')]")).click();
 
 #********************************************************************
+
+Show Hidden List Items with ID "${hiddenID}"
+    Execute JavaScript   document.getElementById('${hiddenID}').classList.remove("jcf-hidden")
+
+#********************************************************************
+
+Restore Hidden List Items with ID "${hiddenID}"
+	Execute JavaScript   document.getElementById('${hiddenID}').classList.add("jcf-hidden")
 
 #*****************************************************
 ######   INTERACT ELEMENTS    ######
 #*****************************************************
 #*****************************************************
 
-Click My Profile
+Go To My Profile
 	click element     xpath=html/body/footer/div/ul/li[3]/a/span
 	click link     xpath=//*[@id='my-profile-dropup']/div/div[2]/ul/li[1]/a
 
@@ -85,10 +92,6 @@ Log Out of MyWFG
 
 Click Redesigned Menu
     click element  xpath=//a[@id='menu-toggle']
-
-#*****************************************************
-
-Click Object Named "${clickelement}"log out
 
 #*****************************************************
 
@@ -214,8 +217,6 @@ Find text on the page
 Elements should be equal ${SQL_Text} ${Webpage_Text}
     Should be equal    ${SQL_Text}    ${Webpage_Text}
 
-Verify element parameters
-#//*[@type='button'][@class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"]
 
 #*********************************************************************************
 
