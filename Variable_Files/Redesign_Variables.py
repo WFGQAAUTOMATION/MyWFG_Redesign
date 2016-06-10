@@ -11,7 +11,7 @@ LOGIN_TITLE = "MyWFG - Log In"
 VALID_USER = "1708W"
 VALID_PASSWORD = "81u3$ky"
 PREF_USER_ID = "3163T"
-SUBMIT_LOGIN = "Log In"
+SUBMIT_LOGIN = "Log in"
 
 # Lifeline Variables
 WFG_DATABASE = "WFGOnline"
@@ -19,3 +19,4 @@ HOSTNAME = "CRDBCOMP03\\CRDBWFGOMOD"
 LL_AGENT_ID = 982036
 Archive_Question = "ArchieveQuestionMark"
 LL_STATE = "NJ"
+

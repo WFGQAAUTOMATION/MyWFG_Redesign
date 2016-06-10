@@ -19,6 +19,7 @@ Library           OperatingSystem
 #${ERROR URL}         https://${SERVER}/Users/Account/LogOn?ReturnUrl=%2F
 
 *** Keywords ***
+
 #*****************************************************
 #*****************************************************
 ######   NAVIGATION  ######
@@ -49,6 +50,21 @@ Log Out of MyWFG
 
 #*****************************************************
 
+Click element using href "${href}"
+    click link    xpath=//a[contains(@href, '${href}')]
+
+#*****************************************************
+
+Click Link with "${href}"
+    click link    xpath=//a[@href="${href}"]
+
+#*****************************************************
+
+Click Link with ID "${ID}"
+    click link    xpath=//a[@id="${ID}"]
+
+#*****************************************************
+
 Wait "${seconds}" Seconds
     set selenium implicit wait  ${seconds}
 
@@ -67,7 +83,7 @@ Scroll Page to Location Where Y equals "${y_location}"
 
 Click OK Button On Java Dialog
     Execute JavaScript    window.close()
-#    driver.findelement(By.xpath("//span[@class="ui-button-text"][contains(text(),'Ok')]")).click();
+#   driver.findelement(By.xpath("//span[@class="ui-button-text"][contains(text(),'Ok')]")).click();
 
 #********************************************************************
 
@@ -91,6 +107,11 @@ Click Object Named "${clickelement}"
 
 #*****************************************************
 
+Click Object Named "${clickelement}" with span name
+    click element    xpath=//span[contains(text(),'${clickelement}')]
+
+#*****************************************************
+
 Click Button named "${buttonname}"
     click button    xpath=//button[contains(text(),'${buttonname}')]
 
@@ -106,6 +127,22 @@ Click Button using id "${buttonid}"
 
 #*****************************************************
 
+Click Button using name "${buttonname}"
+    click button    xpath=//button[@name='${buttonname}']
+
+#*****************************************************
+
+Click Button using value "${buttonvalue}"
+    click button    xpath=//button[@value='${buttonvalue}']
+
+#*****************************************************
+
+Click Element with ID "${button_ID}" and class "${class}"
+
+    click element    xpath=//*[@id='${button_ID}'][@class='${class}']
+
+#*****************************************************
+
 Click Link Named "${clicklick}"
     click link    xpath=//*[(text()='${clicklick}')]
 
@@ -116,6 +153,11 @@ Click Link With Name Contained "${clicklink}"
 
 #***************************************************************
 
+Click Link where ID is "${Link_ID}"
+    click link    xpath=//input[@id='${Link_ID}']
+
+#****************************************************************
+
 Input "${Text}" in The "${FieldName}" Field
     input text  xpath=//input[@name='${FieldName}']   ${Text}
 
@@ -124,7 +166,12 @@ Input "${Text}" in The "${FieldName}" Field
 Input "${Text}" in the "${Fieldname}" Field With ID
     input text  xpath=//input[@id='${FieldName}']   ${Text}
 
-#************************************************************************
+#*******************************************************************
+
+Select Radio Button with ID "${radio_ID}" and value "${value}"
+	select radio button  xpath=//input[@id='${radio_ID}')][@value='${value}']
+
+#*****************************************************
 
 Select Checkbox Where ID is "${cbName}"
     select checkbox     xpath=//input[@id='${cbName}']
@@ -143,7 +190,7 @@ Click List Box Named "${SelectItem}" and select "${Item}"
 #*************************************************************************
 
 Click List Box With ID "${ItemID}" and select "${Item}"
-    Select From List     xpath=//select[@id='${ItemID}']  ${Item}
+    Select From List     xpath=//select[@id='${ItemID}']    ${Item}
 
 #*************************************************************************
 
@@ -151,10 +198,17 @@ Click List Box With ID "${ItemID}" and select by index "${Index}"
     Select From List By Index    xpath=//select[@id='${ItemID}']  ${Index}
 
 #*************************************************************************
+
+Click Archive List Box With ID "${ItemID}" and select by index "${Index}"
+
+    Select From List By Index    xpath=//*[@id='${ItemID}']  ${Index}
+
+#*************************************************************************
+
 Click image where ID is "${ImageID}"
     click image     xpath=//input[@id='${ImageID}']
 
-#**************************************************************************
+#*************************************************************************
 
 Click iamge named "${Image}"
     click image     xpath=//input[@name='${Image}']
@@ -175,6 +229,16 @@ Click Cancel on Alert
      Choose Cancel On Next Confirmation
      sleep      3
      confirm action
+
+#********************************************************************
+
+Show Hidden List Items with ID "${hiddenID}"
+    Execute JavaScript   document.getElementById('${hiddenID}').classList.remove("jcf-hidden")
+
+#********************************************************************
+
+Restore Hidden List Items with ID "${hiddenID}"
+    Execute JavaScript   document.getElementById('${hiddenID}').classList.add("jcf-hidden")
 
 #*****************************************************
 ######   FIND/VERIFY ELEMENTS      ######
@@ -215,3 +279,5 @@ Verify element parameters
 
 Zoom out to "${zoomLevel}" (percentage)
 	Execute javascript  document.body.style.zoom="${zoomLevel}"
+
+
