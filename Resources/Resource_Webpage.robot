@@ -105,9 +105,9 @@ Go To My Profile
 
 #*****************************************************
 
-Log Out of MyWFG
-    click element     xpath=//div/ul/li[3]/a/span
-	click link     xpath=//*[(text()='Log Out')]
+#Log Out of MyWFG
+#    click element     xpath=//div/ul/li[3]/a/span
+#	click link     xpath=//*[(text()='Log Out')]
 
 #*****************************************************
 
