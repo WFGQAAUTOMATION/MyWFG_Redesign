@@ -1,12 +1,12 @@
 *** Settings ***
-Documentation     A test suite with Gherkin style tests.
+Documentation     A test suite to check Licensed Home page.
 ...
 ...               This test will log into MyWFG and
-...               verify the Homepage.
+...               verify the Licensed Home page.
 Metadata          Version   0.1
 Resource          ../../Resources/Resource_Login.robot
 Resource          ../../Resources/Resource_Webpage.robot
-Test Teardown
+Force Tags        Dev_Sanity
 
 *** Test Cases ***
 Login to MyWFG.com
@@ -14,12 +14,15 @@ Login to MyWFG.com
     When user "${VALID_USER}" logs in with password "${VALID_PASSWORD}"
     Then Home Page Should Be Open
 
-Navigate to HomePage
-    And Verify A Link Named "Home" Is On The Page
-    Then Select Menu Item "Home"
-    And Element Header "My WFG Business" Should Be Present
+Click Licensed Home
+    Then Go To  http://${SERVER}/new-licensed-home
 
-Log Out and Close Browser
+Find Text On Webpage
+    And Find "As a licensed associate" On Webpage
+    And Find "iGO" On Webpage
+    And Find "Become Appointed with a Company" On Webpage
+
+Log Out
     Then log out of mywfg
     And close browser
 

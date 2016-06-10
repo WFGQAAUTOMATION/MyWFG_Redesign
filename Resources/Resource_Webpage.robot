@@ -83,27 +83,36 @@ Scroll Page to Location Where Y equals "${y_location}"
 
 Click OK Button On Java Dialog
     Execute JavaScript    window.close()
-#   driver.findelement(By.xpath("//span[@class="ui-button-text"][contains(text(),'Ok')]")).click();
 
 #********************************************************************
+
+Show Hidden List Items with ID "${hiddenID}"
+    Execute JavaScript   document.getElementById('${hiddenID}').classList.remove("jcf-hidden")
+
+#********************************************************************
+
+Restore Hidden List Items with ID "${hiddenID}"
+	Execute JavaScript   document.getElementById('${hiddenID}').classList.add("jcf-hidden")
 
 #*****************************************************
 ######   INTERACT ELEMENTS    ######
 #*****************************************************
 #*****************************************************
 
-Click My Profile
-	click element  xpath=//span[(text()='My profile')]
+Go To My Profile
+	click element     xpath=html/body/footer/div/ul/li[3]/a/span
+	click link     xpath=//*[@id='my-profile-dropup']/div/div[2]/ul/li[1]/a
+
+#*****************************************************
+
+Log Out of MyWFG
+    click element     xpath=//div/ul/li[3]/a/span
+	click link     xpath=//*[(text()='Log Out')]
 
 #*****************************************************
 
 Click Redesigned Menu
     click element  xpath=//a[@id='menu-toggle']
-
-#*****************************************************
-
-Click Object Named "${clickelement}"
-    click element    xpath=//a[(text()='${clickelement}')]
 
 #*****************************************************
 
@@ -143,8 +152,8 @@ Click Element with ID "${button_ID}" and class "${class}"
 
 #*****************************************************
 
-Click Link Named "${clicklick}"
-    click link    xpath=//*[(text()='${clicklick}')]
+Click Link Named "${clicklink}"
+    click link    xpath=//a[contains(text(),'${clicklink}')]
 
 #*****************************************************
 
@@ -260,6 +269,11 @@ Find "${AgentID}" in the Results List
 
 #*****************************************************
 
+Element "${elementname}" Should Be Present
+    element should be visible    //*[contains(text(),'${elementname}')]
+
+#*****************************************************
+
 Verify Title on the page "${titlename}"
     Title Should Be     ${titlename}
 
@@ -272,8 +286,6 @@ Find text on the page
 Elements should be equal ${SQL_Text} ${Webpage_Text}
     Should be equal    ${SQL_Text}    ${Webpage_Text}
 
-Verify element parameters
-#//*[@type='button'][@class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"]
 
 #*********************************************************************************
 
