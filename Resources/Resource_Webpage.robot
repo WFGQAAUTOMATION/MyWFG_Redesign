@@ -45,8 +45,8 @@ Select Menu Item "${clickelement}"
 
 #*****************************************************
 
-Log Out of MyWFG
-    click link    xpath=//a[@href="/Wfg.MyWfgLogin/Account/LogOff"]
+#Log Out of MyWFG
+#    click link    xpath=//a[@href="/Wfg.MyWfgLogin/Account/LogOff"]
 
 #*****************************************************
 
@@ -105,9 +105,9 @@ Go To My Profile
 
 #*****************************************************
 
-#Log Out of MyWFG
-#    click element     xpath=//div/ul/li[3]/a/span
-#	click link     xpath=//*[(text()='Log Out')]
+Log Out of MyWFG
+    click element     xpath=//div/ul/li[3]/a/span
+	click link     xpath=//*[(text()='Log Out')]
 
 #*****************************************************
 
