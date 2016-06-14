@@ -30,11 +30,14 @@ Login to MyWFG.com
     Verify A Link Named "Profile" Is On The Page
     sleep    2s
 
+#Go to My Profile Page
+#    Click My Profile
+#    sleep    2s
+#    Click Link with ID "myProfile"
+#    sleep    2s
+
 Go to My Profile Page
-    Click My Profile
-    sleep    2s
-#   click link    xpath=(//a[contains(@href, '/profile')])[2]
-    Click Link with ID "myProfile"
+    Go To My Profile
     sleep    2s
 
 Verify Webpage and Click Electronic 1099-Misc
@@ -69,10 +72,6 @@ Run Opt Out
 
 Verify Opt-In Opt-Out Settings
     Find "${VERIFY_TEXT}" On Webpage
-    sleep    1s
-
-Go My Profile Page to Log Out
-    Click My Profile
     sleep    1s
 
 Log Out of MyWFG

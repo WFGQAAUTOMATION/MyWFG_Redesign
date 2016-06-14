@@ -36,9 +36,7 @@ Login to MyWFG.com
     sleep   2s
 
 Go to My Profile Page
-    Click My Profile
-    sleep    2s
-    Click Link with ID "myProfile"
+    Go To My Profile
     sleep    2s
 
 Verify Webpage and Click Text Messaging
@@ -126,11 +124,8 @@ Verify Subscription Change
     page should not contain    "${VERIFY_TEXT}"
 #    Find "${VERIFY_TEXT}" On Webpage
 
-Go My Profile Page to Log Out
-    Click My Profile
-    sleep    3s
-
 Log Out of MyWFG
+    sleep    4s
     Log Out of MyWFG
 
 Close opened Browser

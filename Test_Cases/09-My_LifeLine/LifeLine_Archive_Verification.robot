@@ -7,10 +7,10 @@ Documentation     A test suite to view archived notifications and verify Dismiss
 ...               Archive link, verify  dismissed notifications and Dismiss Dates, and closes Archive
 ...
 Metadata          Version   0.1
-Resource          ../../Resources/Resource_Login.robot
-Resource          ../../Resources/Resource_Webpage.robot
-Library           ../../Resources/Testing_Library.py
-Library           ../../Resources/Database_Library.py
+Resource          C:/Github_Projects/MyWFG_Redesign/Resources/Resource_Login.robot
+Resource          C:/Github_Projects/MyWFG_Redesign/Resources/Resource_Webpage.robot
+Library           C:/Github_Projects/MyWFG_Redesign/Resources/Testing_Library.py
+Library           C:/Github_Projects/MyWFG_Redesign/Resources/Database_Library.py
 Library           Selenium2Library
 Library           DatabaseLibrary
 Library           String
@@ -66,14 +66,12 @@ Click Archive Image
     Click Link with ID "linkArchive"
     sleep    2s
 
+Verify Archived Task
+
     # **************Check if the Due Date of the archived notification is correct*****
     #************Check if the Date when notification was archived  is correct. -->
     #-->Eliminate "Dismissed..." verbiage from the Dismiss Date statemet**************
     #************Check if the correct Dismiss reason was passed to Archive*************
-
-Go My Profile Page to Log Out
-    Click My Profile
-    sleep    1s
 
 Log Out of MyWFG
     Log Out of MyWFG

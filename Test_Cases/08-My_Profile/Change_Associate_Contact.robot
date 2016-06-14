@@ -31,9 +31,7 @@ Login to MyWFG.com
     sleep   2s
 
 Go to My Profile Page
-    Click My Profile
-    sleep    2s
-    Click Link with ID "myProfile"
+    Go To My Profile
     sleep    2s
 
 Verify Webpage and Click Contact Settings
@@ -80,11 +78,8 @@ Click Save Changes Button
 Verify Associate Contact Change
     Find "${VERIFY_TEXT}" On Webpage
 
-Go My Profile Page to Log Out
-    Click My Profile
-    sleep    2s
-
 Log Out of MyWFG
+    sleep   2s
     Log Out of MyWFG
 
 Close opened Browser

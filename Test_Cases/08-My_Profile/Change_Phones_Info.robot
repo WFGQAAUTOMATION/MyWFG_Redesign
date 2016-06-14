@@ -31,10 +31,7 @@ Login to MyWFG.com
     sleep   3s
 
 Go to My Profile Page
-    Click My Profile
-    sleep    2s
-#   click link    xpath=(//a[contains(@href, '/profile')])[2]
-    Click Link with ID "myProfile"
+    Go To My Profile
     sleep    2s
 
 Verify Webpage and Click Contact Settings
@@ -76,10 +73,6 @@ Click Save Changes Button
 
 Verify Phone Change
     Find "${VERIFY_TEXT}" On Webpage
-
-Go My Profile Page to Log Out
-    Click My Profile
-    sleep    1s
 
 Log Out of MyWFG
     sleep    3s

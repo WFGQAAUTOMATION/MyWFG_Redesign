@@ -30,23 +30,20 @@ ${VERIFY_TEXT}       Your Profile was Successfully changed!
 
 Login to MyWFG.com
     Given browser is opened to login page
-#    When user "${PREF_USER_ID}" logs in with password "${VALID_PASSWORD}"
-    When user "${VALID_USER}" logs in with password "${VALID_PASSWORD}"
+#    When user "${VALID_USER}" logs in with password "${VALID_PASSWORD}"
+    When user "${PREF_USER_ID}" logs in with password "${VALID_PASSWORD}"
     Then Home Page Should Be Open
     Verify A Link Named "Profile" Is On The Page
     sleep   2s
 
 Go to My Profile Page
-    Click My Profile
-    sleep    2s
-#   click link    xpath=(//a[contains(@href, '/profile')])[2]
-    Click Link with ID "myProfile"
+    Go To My Profile
     sleep    2s
 
 Verify Webpage and Click Business Stats
     Find "${ELEMENT_ID}" On Webpage
     Click Link With Name Contained "${ELEMENT_ID}"
-    sleep    3s
+    sleep    2s
 
 Click Edit Business Stats button for Cancel
     Click Button using id "businessStats-Edit"
@@ -85,17 +82,6 @@ Scroll Down 1
     Scroll Page to Location Where Y equals "600"
     sleep    2s
 
-#Edit Channel List Box
-#***** This List Box has 3 different scenarious ...
-#***** 1. If agent is new, the channel is GREEN by default and test will fail
-#***** 2. If channel is the same, different messages appear and test will fail
-#***** 3. If channel changed to opposit, the test will go through
-#    Click Object Named "Select" with span name
-#    Show Hidden List Items with ID "newDivision"
-#	 Select from list by label  xpath=//select[@id='newDivision']  ${CHANNEL}
-#	 Restore Hidden List Items with ID "newDivision"
-#    sleep    1s
-
 Edit Language Spoken
     Input "${LANGUAGE}" in the "newLanguage" Field With ID
     sleep    1s
@@ -118,10 +104,6 @@ Click Save button
 
 Verify Business Stats Successful Change
     Find "${VERIFY_TEXT}" On Webpage
-
-Go My Profile Page to Log Out
-    Click My Profile
-    sleep    2s
 
 Log Out of MyWFG
     Log Out of MyWFG

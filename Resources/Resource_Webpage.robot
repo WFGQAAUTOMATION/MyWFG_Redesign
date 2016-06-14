@@ -86,13 +86,13 @@ Click OK Button On Java Dialog
 
 #********************************************************************
 
-Show Hidden List Items with ID "${hiddenID}"
-    Execute JavaScript   document.getElementById('${hiddenID}').classList.remove("jcf-hidden")
-
-#********************************************************************
-
-Restore Hidden List Items with ID "${hiddenID}"
-	Execute JavaScript   document.getElementById('${hiddenID}').classList.add("jcf-hidden")
+#Show Hidden List Items with ID "${hiddenID}"
+#    Execute JavaScript   document.getElementById('${hiddenID}').classList.remove("jcf-hidden")
+#
+##********************************************************************
+#
+#Restore Hidden List Items with ID "${hiddenID}"
+#	Execute JavaScript   document.getElementById('${hiddenID}').classList.add("jcf-hidden")
 
 #*****************************************************
 ######   INTERACT ELEMENTS    ######
@@ -100,13 +100,16 @@ Restore Hidden List Items with ID "${hiddenID}"
 #*****************************************************
 
 Go To My Profile
-	click element     xpath=html/body/footer/div/ul/li[3]/a/span
-	click link     xpath=//*[@id='my-profile-dropup']/div/div[2]/ul/li[1]/a
+#	click element     xpath=html/body/footer/div/ul/li[3]/a/span
+    click element    xpath=//span[contains(text(),'My profile')]
+#	click link     xpath=//*[@id='my-profile-dropup']/div/div[2]/ul/li[1]/a
+    click link    xpath=//a[@id='myProfile']
 
 #*****************************************************
 
 Log Out of MyWFG
-    click element     xpath=//div/ul/li[3]/a/span
+#   click element     xpath=//div/ul/li[3]/a/span
+    click element    xpath=//span[contains(text(),'My profile')]
 	click link     xpath=//*[(text()='Log Out')]
 
 #*****************************************************

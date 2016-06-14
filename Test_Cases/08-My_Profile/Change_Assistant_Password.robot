@@ -30,10 +30,7 @@ Login to MyWFG.com
     sleep    1s
 
 Go to My Profile Page
-    Click My Profile
-    sleep    2s
-#   click link    xpath=(//a[contains(@href, '/profile')])[2]
-    Click Link with ID "myProfile"
+    Go To My Profile
     sleep    2s
 
 Verify Webpage and Click Account Administration
@@ -71,10 +68,6 @@ Verify Assistant Password Change
 
 Click Return to Settings button
     Click Link With Name Contained "Return to Settings"
-    sleep    2s
-
-Go My Profile Page to Log Out
-    Click My Profile
     sleep    2s
 
 Log Out of MyWFG
