@@ -5,7 +5,6 @@ Documentation     A test suite to view archived notifications and verify Dismiss
 ...
 ...               This test will log into MyWFG, click My Business button, click My LifeLine, click
 ...               Archive link, verify  dismissed notifications and Dismiss Dates, and closes Archive
-...
 Metadata          Version   0.1
 Resource          C:/Github_Projects/MyWFG_Redesign/Resources/Resource_Login.robot
 Resource          C:/Github_Projects/MyWFG_Redesign/Resources/Resource_Webpage.robot
@@ -21,15 +20,19 @@ Suite Teardown    Close Browser
 *** Variables ***
 
 ${Notification_ID}    4
-${Dismiss_Index}      1
+${Dismiss_Index}      3
 ${Dismiss_Task}       Yes
 ${Agent_Info}
+${Dismiss_Reason}
 
 *** Test Cases ***
 
 Select Agent, Login to MyWFG.com, Check Dismiss Notifications
     ${Agent_Info}    Database_Library.Get_lifeline_dismiss_notification_agent    ${Notification_ID}    ${HOSTNAME}
     ...    ${WFG_DATABASE}
+
+    ${Dismiss_Reason}    Database_Library.get_dismissed_reason    ${Dismiss_Index}    ${HOSTNAME}    ${WFG_DATABASE}
+
     Browser is opened to login page
     User "${Agent_Info[0]}" logs in with password "${VALID_PASSWORD}"
     Home Page for any Agent Should Be Open
@@ -38,6 +41,7 @@ Select Agent, Login to MyWFG.com, Check Dismiss Notifications
     sleep   3s
 
     Set Suite Variable    ${Agent_Info}
+    Set Suite Variable    ${Dismiss_Reason}
 
 Click My Business button
     Click Link with ID "myBusinessTabDesktop"
@@ -67,11 +71,8 @@ Click Archive Image
     sleep    2s
 
 Verify Archived Task
-
-    # **************Check if the Due Date of the archived notification is correct*****
-    #************Check if the Date when notification was archived  is correct. -->
-    #-->Eliminate "Dismissed..." verbiage from the Dismiss Date statemet**************
-    #************Check if the correct Dismiss reason was passed to Archive*************
+    Run Keyword If    ${Notification_ID} in [4, 5, 6, 7] and '${Dismiss_Task}' == 'Yes'
+    ...    Verify Archived Task for htmlID ${Agent_Info[1]} and Dismiss Reason ${Dismiss_Reason}
 
 Log Out of MyWFG
     Log Out of MyWFG
@@ -82,6 +83,7 @@ Close opened Browser
 
 
 *** Keywords ***
+
 Confirm No to Dismiss for htmlID - ${htmlID} and Dismiss Index - ${Index}
     Click Object Named "Select dismiss reason" with span name
     sleep    1s
@@ -93,7 +95,6 @@ Confirm No to Dismiss for htmlID - ${htmlID} and Dismiss Index - ${Index}
     log    Dismiss_Task is No
 
 Confirm Yes to Dismiss for htmlID - ${htmlID} and Dismiss Index - ${Index}
-#    Click Object Named "Select dismiss reason" with span name
     sleep    1s
     Show Hidden List Items with ID "selDismissReason-${Agent_Info[1]}"
     Click Archive List Box With ID "selDismissReason-${Agent_Info[1]}" and select by index "${Dismiss_Index}"
@@ -104,4 +105,10 @@ Confirm Yes to Dismiss for htmlID - ${htmlID} and Dismiss Index - ${Index}
     Click Element with ID "myModalPopup-close" and class "btn-wfg btn-primary btn-block"
     log    Dismiss_Task is Yes
 
-
+Verify Archived Task for htmlID ${htmlID} and Dismiss Reason ${Dismiss_Reason}
+    Find Element on the Page "ArchiveDate-${htmlID}"
+    Find Element on the Page "ArchiveNotice-${htmlID}"
+    ${Date_and_Reason}    Testing_Library.Get_LifeLine_Archived_Description    ${Dismiss_Reason}
+    Find "${Date_and_Reason}" On Webpage
+    ${Webpage_Text}    Get Text    xpath=//*[@id='ArchiveDate-${htmlID}']
+    Elements should be equal ${Date_and_Reason} ${Webpage_Text}

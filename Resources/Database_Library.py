@@ -361,9 +361,24 @@ def lifeline_old_dates_archived(icount, ll_archived, hostname, wfg_database):
     return result
 
 
+def get_dismissed_reason(dismiss_index, hostname, wfg_database):
+    result = ""
+
+    str_sql = "SELECT Description FROM [WFGOnline].[dbo].[wfgLU_NotificationDismissReason] \
+               WHERE DismissReasonID = %s" % dismiss_index
+
+    rows = connect_to_database(str_sql, hostname, wfg_database)
+
+    if rows:
+        for row in rows:
+            result = row[0]
+    else:
+        print "No Dismiss Reason found"
+    return result
+
+
 def get_archived_datedue(archived_task_html_id, hostname, wfg_database):
     result = ""
-    x = " "
 
     str_sql = "SELECT DateDue FROM [WFGOnline].[dbo].[WFGLLNotificationsHistory] \
                WHERE AgentNotificationID = %s" % archived_task_html_id
@@ -380,7 +395,6 @@ def get_archived_datedue(archived_task_html_id, hostname, wfg_database):
 
 def lifeline_pcodes(notif_id, p_codes, p_compname, hostname, wfg_database):
     result = ""
-    x = " "
 
     str_sql = "SELECT ll.NotificationID, n.[Description], ll.DateDue, a.AgentCodeNumber, ll.NotificationSubType, \
               ll.NotificationTypeID, ll.Modified, ll.AgentID \
@@ -453,7 +467,6 @@ def lifeline_records_duplications(i_count, hostname, wfg_database):
 
 def lifeline_iul_annuity_yellow_notifications(notif_id1, notif_id2, hostname, wfg_database):
     result = ""
-    x = " "
 
     str_sql = "SELECT NotificationID, Description FROM wfgLU_Notification \
                WHERE NotificationID IN (%s, %s)" % (notif_id1, notif_id2)

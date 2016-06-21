@@ -1,13 +1,15 @@
 *** Settings ***
-Documentation    A test suite to verify MyWFG LifeLine E&O Expiration dates for Canada
+Documentation     A test suite to verify MyWFG LifeLine E&O Expiration dates for Canada
+...               Author: Isabella Fayner
+...               Creation Date: 06/17/2016
 ...
-...               This test will log into MyWFG and verify that MyWFG LifeLine E&O notification
-...               for Canada is displayed according to expiration dates
+...               This test will log into MyWFG, go to My Business/My Lifeline and verify that MyWFG
+...               LifeLine E&O notification for Canada is displayed according to expiration dates
 Metadata          Version   0.1
-Resource          ../../Resources/Resource_Login.robot
-Resource          ../../Resources/Resource_Webpage.robot
-Library           ../../Resources/Testing_Library.py
-Library           ../../Resources/Database_Library.py
+Resource          C:/Github_Projects/MyWFG_Redesign/Resources/Resource_Login.robot
+Resource          C:/Github_Projects/MyWFG_Redesign/Resources/Resource_Webpage.robot
+Library           C:/Github_Projects/MyWFG_Redesign/Resources/Testing_Library.py
+Library           C:/Github_Projects/MyWFG_Redesign/Resources/Database_Library.py
 Library           Selenium2Library
 Library           DatabaseLibrary
 Library           String
@@ -16,10 +18,9 @@ Library           DateTime
 Suite Teardown     Close Browser
 
 *** Variables ***
-#${DATABASE}               WFGOnline
-#${HOSTNAME}               CRDBCOMP03\\CRDBWFGOMOD
+
 ${Notification_ID}        27
-${Notification_TypeID}    2
+${Notification_TypeID}    1
 ${STATE}
 
 *** Test Cases ***
@@ -29,15 +30,23 @@ Connect to Database
 
 Select Agent and Login to MyWFG.com and Check LifeLine
     ${Agent_Info}    Database_Library.Find_LifeLine_Agent    ${Notification_ID}    ${Notification_TypeID}    ${STATE}
+    ...    ${HOSTNAME}    ${WFG_DATABASE}
     Browser is opened to login page
     User "${Agent_Info[0]}" logs in with password "${VALID_PASSWORD}"
     Home Page for any Agent Should Be Open
-    sleep   2s
-    Click element   xpath=//span[@class="ui-user-MyLifeline-notification-attachment-count"]
     sleep    2s
-    Click image using img where ID is "QuestionMark-${Agent_Info[1]}"
+    Verify A Link Named "Business" Is On The Page
     sleep    2s
-    Click image where ID is "close"
+
+    Set Suite Variable    ${Agent_Info}
+
+Click My Business button
+    Click Link with ID "myBusinessTabDesktop"
+    sleep    2s
+
+Click My Life Line button
+    Click element using href "/Wfg.MyLifeline"
+    sleep    3s
 #   This is for E&O dates verifications only
     ${NoticeID}    query    SELECT Top 1 NoticeID FROM [WFGWorkFlow].[dbo].[Agent_EandO_Collections] WHERE AgentID = '${Agent_Info[0]}' ORDER BY OpenDate Desc;
 
@@ -79,4 +88,3 @@ Disconnect from SQL Server
     Disconnect From Database
 
 *** Keywords ***
-

@@ -3,14 +3,13 @@ Documentation     A test suite to verify MyWFG LifeLine Affiliation Renewal Expi
 ...               Author: Isabella Fayner
 ...               Creation Date: 06/14/2016
 ...
-...               This test will log into MyWFG, go to My Business/My Lifeline
-...               and verify that MyWFG LifeLine Affiliation Renewal
-...               notification is displayed according to expiration dates
+...               This test will log into MyWFG, go to My Business/My Lifeline and verify that MyWFG ation Renewal
+...               LifeLine Affiliation notification is displayed according to expiration dates
 Metadata          Version   0.1
-Resource          ../../Resources/Resource_Login.robot
-Resource          ../../Resources/Resource_Webpage.robot
-Library           ../../Resources/Testing_Library.py
-Library           ../../Resources/Database_Library.py
+Resource          C:/Github_Projects/MyWFG_Redesign/Resources/Resource_Login.robot
+Resource          C:/Github_Projects/MyWFG_Redesign/Resources/Resource_Webpage.robot
+Library           C:/Github_Projects/MyWFG_Redesign/Resources/Testing_Library.py
+Library           C:/Github_Projects/MyWFG_Redesign/Resources/Database_Library.py
 Library           Selenium2Library
 Library           DatabaseLibrary
 Library           String
@@ -45,14 +44,6 @@ Click My Business button
 Click My Life Line button
     Click element using href "/Wfg.MyLifeline"
     sleep    3s
-
-
-
-    Click element   xpath=//span[@class="ui-user-MyLifeline-notification-attachment-count"]
-    sleep    2s
-    Click image using img where ID is "QuestionMark-${Agent_Info[1]}"
-    sleep    2s
-    Click image where ID is "close"
     ${Webpage_DateDue_Str}    Get Text    xpath=//*[@id='DueDate-${Agent_Info[1]}']
     ${DateDue_Length}    Get Length    ${Webpage_DateDue_Str}
 

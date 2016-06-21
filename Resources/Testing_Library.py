@@ -1,4 +1,5 @@
 from robot.libraries.BuiltIn import BuiltIn
+import time
 
 
 def check_opt_in_option(passed):
@@ -65,6 +66,25 @@ def title_should_start_with(expected):
                              % (title, expected))
 
 
+def get_lifeline_archived_description(dismiss_reason):
+    result = ""
+    current_date = ""
+    month = ""
+    day = ""
+    year = ""
+    current_date = (time.strftime("%m/%d/%Y"))
+    month = current_date[:2]
+    if month[0] == "0":
+        month = month[1:2]
+    day = current_date[3:5]
+    if day[0] == "0":
+        day = day[4:5]
+    year = current_date[6:]
+    current_date = month + "/" + day + "/" + year
+    result = current_date + " (Dismissed -" + dismiss_reason + ")"
+    return result
+
+
 def temperature_calculations(convert_from, convert_to, temp_value):
     result = 0
     if convert_from == "F":
@@ -76,13 +96,6 @@ def temperature_calculations(convert_from, convert_to, temp_value):
     print "This is calculator"
     print "Convert ", temp_value, " from ", convert_from, "to ", convert_to
     print "This is my result ", result
-
-    return result
-
-
-def verify_lifeline_dismiss_reason(ella, roma, rita, jane):
-    result = ella + roma + rita + jane
-    print "New function"
 
     return result
 

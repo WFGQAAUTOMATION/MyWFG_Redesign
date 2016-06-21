@@ -1,13 +1,15 @@
 *** Settings ***
-Documentation    A test suite to verify MyWFG LifeLine Appointment Renewal Expiration dates
+Documentation     A test suite to verify MyWFG LifeLine Appointment Renewal Expiration dates
+...               Author: Isabella Fayner
+...               Creation Date: 06/17/2016
 ...
-...               This test will log into MyWFG and verify that MyWFG LifeLine Appointment Renewal
-...               notification is displayed according to expiration dates
+...               This test will log into MyWFG, go to My Business/My Lifeline and verify that MyWFG
+...               LifeLine Appointment Renewal notification is displayed according to expiration dates
 Metadata          Version   0.1
-Resource          ../../Resources/Resource_Login.robot
-Resource          ../../Resources/Resource_Webpage.robot
-Library           ../../Resources/Testing_Library.py
-Library           ../../Resources/Database_Library.py
+Resource          C:/Github_Projects/MyWFG_Redesign/Resources/Resource_Login.robot
+Resource          C:/Github_Projects/MyWFG_Redesign/Resources/Resource_Webpage.robot
+Library           C:/Github_Projects/MyWFG_Redesign/Resources/Testing_Library.py
+Library           C:/Github_Projects/MyWFG_Redesign/Resources/Database_Library.py
 Library           Selenium2Library
 Library           DatabaseLibrary
 Library           String
@@ -24,20 +26,25 @@ ${STATE}
 
 *** Test Cases ***
 
-#Connect to Database
-#    Connect To Database Using Custom Params    pymssql    host='${HOSTNAME}', database='${DATABASE}'
-
 Select Agent and Login to MyWFG.com
     ${Agent_Info}    Database_Library.Find_LifeLine_Agent    ${Notification_ID}    ${Notification_TypeID}    ${STATE}
+    ...    ${HOSTNAME}    ${WFG_DATABASE}
     Browser is opened to login page
     User "${Agent_Info[0]}" logs in with password "${VALID_PASSWORD}"
     Home Page for any Agent Should Be Open
-    sleep   2s
-    Click element   xpath=//span[@class="ui-user-MyLifeline-notification-attachment-count"]
     sleep    2s
-    Click image using img where ID is "QuestionMark-${Agent_Info[1]}"
+    Verify A Link Named "Business" Is On The Page
     sleep    2s
-    Click image where ID is "close"
+
+    Set Suite Variable    ${Agent_Info}
+
+Click My Business button
+    Click Link with ID "myBusinessTabDesktop"
+    sleep    2s
+
+Click My Life Line button
+    Click element using href "/Wfg.MyLifeline"
+    sleep    3s
     ${Webpage_DateDue_Str}    Get Text    xpath=//*[@id='DueDate-${Agent_Info[1]}']
     ${DateDue_Length}    Get Length    ${Webpage_DateDue_Str}
 
@@ -75,8 +82,4 @@ Select Agent and Login to MyWFG.com
 Log Out of MyWFG
     Log Out of MyWFG
 
-#Disconnect from SQL Server
-#    Disconnect From Database
-
 *** Keywords ***
-

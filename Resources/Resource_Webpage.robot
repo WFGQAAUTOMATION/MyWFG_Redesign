@@ -282,13 +282,13 @@ Verify Title on the page "${titlename}"
 
 #*****************************************************
 
-Find text on the page
-    Page Should Contain Element    xpath=//
-                                   .//*[@id='DueDate-10379399']
-#*********************************************************************************
-Elements should be equal ${SQL_Text} ${Webpage_Text}
-    Should be equal    ${SQL_Text}    ${Webpage_Text}
+Find Element on the Page "${element_id}"
+    Page Should Contain Element    xpath=.//*[@id='${element_id}']
 
+#*********************************************************************************
+
+Elements should be equal ${Compare_Text} ${Webpage_Text}
+    Should be equal    ${Compare_Text}    ${Webpage_Text}
 
 #*********************************************************************************
 
