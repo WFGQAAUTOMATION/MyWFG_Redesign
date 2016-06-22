@@ -9,7 +9,7 @@ ERROR_URL = "https://m2-www.mywfg.com/Users/Account/LogOn?ReturnUrl=%2F"
 PAGE_TITLE = "MyWFG"
 LOGIN_TITLE = "MyWFG - Log In"
 VALID_USER = "1708W"
-VALID_PASSWORD = "lia1030c"
+VALID_PASSWORD = "81u3$ky"
 PREF_USER_ID = "3163T"
 SUBMIT_LOGIN = "Log in"
 
