@@ -8,6 +8,7 @@ Library           Selenium2Library
 Library           Testing_Library.py
 Library           OperatingSystem
 
+
 *** Variables ***
 #${SERVER}            m-www.mywfg.com
 #${BROWSER}           ff
@@ -30,85 +31,23 @@ Click Menu Item "${menuitem}"
 
 #*****************************************************
 
-Navigate to webpage
-    click link  ${LinkName}
-
-#*****************************************************
-
-Hover Over "${hoverover}"
-    mouse over       xpath=//a[(text()='${hoverover}')]
-
-#*****************************************************
-
 Select Menu Item "${clickelement}"
     click element    xpath=//a[(text()='${clickelement}')]
 
 #*****************************************************
 
-#Log Out of MyWFG
-#    click link    xpath=//a[@href="/Wfg.MyWfgLogin/Account/LogOff"]
+Navigate to webpage
+    click link  ${LinkName}
 
-#*****************************************************
-
-Click element using href "${href}"
-    click link    xpath=//a[contains(@href, '${href}')]
-
-#*****************************************************
-
-Click Link with "${href}"
-    click link    xpath=//a[@href="${href}"]
-
-#*****************************************************
-
-Click Link with ID "${ID}"
-    click link    xpath=//a[@id="${ID}"]
-
-#*****************************************************
-
-Wait "${seconds}" Seconds
-    set selenium implicit wait  ${seconds}
-
-#*****************************************************
-
-Scroll Page to Location
-    [Arguments]    ${x_location}    ${y_location}
-    Execute JavaScript    window.scrollTo(${x_location},${y_location})
-
-#*********************************************************************
-
-Scroll Page to Location Where Y equals "${y_location}"
-    Execute JavaScript    window.scrollTo(0,${y_location})
-
-#*********************************************************************
-
-Click OK Button On Java Dialog
-    Execute JavaScript    window.close()
-
-#********************************************************************
-
-#Show Hidden List Items with ID "${hiddenID}"
-#    Execute JavaScript   document.getElementById('${hiddenID}').classList.remove("jcf-hidden")
-#
-##********************************************************************
-#
-#Restore Hidden List Items with ID "${hiddenID}"
-#	Execute JavaScript   document.getElementById('${hiddenID}').classList.add("jcf-hidden")
-
-#*****************************************************
-######   INTERACT ELEMENTS    ######
-#*****************************************************
 #*****************************************************
 
 Go To My Profile
-#	click element     xpath=html/body/footer/div/ul/li[3]/a/span
     click element    xpath=//span[contains(text(),'My profile')]
-#	click link     xpath=//*[@id='my-profile-dropup']/div/div[2]/ul/li[1]/a
     click link    xpath=//a[@id='myProfile']
 
 #*****************************************************
 
 Log Out of MyWFG
-#   click element     xpath=//div/ul/li[3]/a/span
     click element    xpath=//span[contains(text(),'My profile')]
 	click link     xpath=//*[(text()='Log Out')]
 
@@ -117,6 +56,62 @@ Log Out of MyWFG
 Click Redesigned Menu
     click element  xpath=//a[@id='menu-toggle']
 
+#*****************************************************
+
+Scroll Page to Location
+    [Arguments]    ${x_location}    ${y_location}
+    Execute JavaScript    window.scrollTo(${x_location},${y_location})
+
+#*****************************************************
+
+Scroll Page to Location Where Y equals "${y_location}"
+    Execute JavaScript    window.scrollTo(0,${y_location})
+
+#*****************************************************
+
+Zoom out to "${zoomLevel}" (percentage)
+	Execute javascript  document.body.style.zoom="${zoomLevel}"
+
+#*****************************************************
+
+Hover Over "${hoverover}"
+    mouse over       xpath=//a[(text()='${hoverover}')]
+
+#*****************************************************
+
+Wait "${seconds}" Seconds
+    set selenium implicit wait  ${seconds}
+
+#*****************************************************
+
+Click Ok on Alert
+    confirm action
+
+#*****************************************************
+
+Click Cancel on Alert
+     Choose Cancel On Next Confirmation
+     sleep      3
+     confirm action
+
+#*****************************************************
+
+Show Hidden List Items with ID "${hiddenID}"
+    Execute JavaScript   document.getElementById('${hiddenID}').classList.remove("jcf-hidden")
+
+#*****************************************************
+
+Restore Hidden List Items with ID "${hiddenID}"
+    Execute JavaScript   document.getElementById('${hiddenID}').classList.add("jcf-hidden")
+
+#*****************************************************
+
+Click OK Button On Java Dialog
+    Execute JavaScript    window.close()
+
+#*****************************************************
+######   INTERACT ELEMENTS    ######
+#*****************************************************
 #*****************************************************
 
 Click Object Named "${clickelement}" with span name
@@ -155,6 +150,17 @@ Click Element with ID "${button_ID}" and class "${class}"
 
 #*****************************************************
 
+Click Element with ID "${button_ID}"
+
+    click element    xpath=//*[@id='${button_ID}']
+
+#*****************************************************
+
+Click Element using href "${href}"
+    click link    xpath=//a[contains(@href, '${href}')]
+
+#*****************************************************
+
 Click Link Named "${clicklink}"
     click link    xpath=//a[contains(text(),'${clicklink}')]
 
@@ -163,22 +169,32 @@ Click Link Named "${clicklink}"
 Click Link With Name Contained "${clicklink}"
     click link    xpath=//a[contains(text(),'${clicklink}')]
 
-#***************************************************************
+#*****************************************************
 
 Click Link where ID is "${Link_ID}"
     click link    xpath=//input[@id='${Link_ID}']
 
-#****************************************************************
+#*****************************************************
+
+Click Link with "${href}"
+    click link    xpath=//a[@href="${href}"]
+
+#*****************************************************
+
+Click Link with ID "${ID}"
+    click link    xpath=//a[@id="${ID}"]
+
+#*****************************************************
 
 Input "${Text}" in The "${FieldName}" Field
     input text  xpath=//input[@name='${FieldName}']   ${Text}
 
-#***************************************************************
+#*****************************************************
 
 Input "${Text}" in the "${Fieldname}" Field With ID
     input text  xpath=//input[@id='${FieldName}']   ${Text}
 
-#*******************************************************************
+#*****************************************************
 
 Select Radio Button with ID "${radio_ID}" and value "${value}"
 	select radio button  xpath=//input[@id='${radio_ID}')][@value='${value}']
@@ -188,69 +204,47 @@ Select Radio Button with ID "${radio_ID}" and value "${value}"
 Select Checkbox Where ID is "${cbName}"
     select checkbox     xpath=//input[@id='${cbName}']
 
-#************************************************************************
+#*****************************************************
 
 Select Frame Where ID is "${frameID}"
     log  ${frameID}
     select frame    xpath=//iframe[@id='${frameID}']
 
-#************************************************************************
+#*****************************************************
 
 Click List Box Named "${SelectItem}" and select "${Item}"
     Select From List     xpath=//select[@name='${SelectItem}']  ${Item}
 
-#*************************************************************************
+#*****************************************************
 
 Click List Box With ID "${ItemID}" and select "${Item}"
     Select From List     xpath=//select[@id='${ItemID}']    ${Item}
 
-#*************************************************************************
+#*****************************************************
 
 Click List Box With ID "${ItemID}" and select by index "${Index}"
     Select From List By Index    xpath=//select[@id='${ItemID}']  ${Index}
 
-#*************************************************************************
+#*****************************************************
 
 Click Archive List Box With ID "${ItemID}" and select by index "${Index}"
 
     Select From List By Index    xpath=//*[@id='${ItemID}']  ${Index}
 
-#*************************************************************************
+#*****************************************************
 
 Click image where ID is "${ImageID}"
     click image     xpath=//input[@id='${ImageID}']
 
-#*************************************************************************
+#*****************************************************
 
-Click iamge named "${Image}"
+Click image named "${Image}"
     click image     xpath=//input[@name='${Image}']
 
 #*****************************************************
 
 Click image using img where ID is "${ImageID}"
     click image     xpath=//img[@id='${ImageID}']
-
-#*****************************************************
-
-Click Ok on Alert
-    confirm action
-
-#*****************************************************
-
-Click Cancel on Alert
-     Choose Cancel On Next Confirmation
-     sleep      3
-     confirm action
-
-#********************************************************************
-
-Show Hidden List Items with ID "${hiddenID}"
-    Execute JavaScript   document.getElementById('${hiddenID}').classList.remove("jcf-hidden")
-
-#********************************************************************
-
-Restore Hidden List Items with ID "${hiddenID}"
-    Execute JavaScript   document.getElementById('${hiddenID}').classList.add("jcf-hidden")
 
 #*****************************************************
 ######   FIND/VERIFY ELEMENTS      ######
@@ -285,14 +279,7 @@ Verify Title on the page "${titlename}"
 Find Element on the Page "${element_id}"
     Page Should Contain Element    xpath=.//*[@id='${element_id}']
 
-#*********************************************************************************
+#*****************************************************
 
 Elements should be equal ${Compare_Text} ${Webpage_Text}
     Should be equal    ${Compare_Text}    ${Webpage_Text}
-
-#*********************************************************************************
-
-Zoom out to "${zoomLevel}" (percentage)
-	Execute javascript  document.body.style.zoom="${zoomLevel}"
-
-
