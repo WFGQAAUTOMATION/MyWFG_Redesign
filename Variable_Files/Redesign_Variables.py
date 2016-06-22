@@ -1,15 +1,19 @@
-# Login Variables
+# Login Variables  www-03.mywfg.com
 BROWSER = "ff"
 FF_PROFILE = "C:/FF_Selenium"
 DELAY = 0
-SERVER = "m2-www.mywfg.com"
-LOGIN_URL = "https://m2-www.mywfg.com/Users/Account/AccessDenied?ReturnUrl=%2f"
-WELCOME_URL = "https://m2-www.mywfg.com"
-ERROR_URL = "https://m2-www.mywfg.com/Users/Account/LogOn?ReturnUrl=%2F"
+SERVER = "www-03.mywfg.com"
+LOGIN_URL = "https://www-03.mywfg.com/Users/Account/AccessDenied?ReturnUrl=%2f"
+WELCOME_URL = "https://www-03.mywfg.com"
+ERROR_URL = "https://www-03.mywfg.com/Users/Account/LogOn?ReturnUrl=%2F"
+# SERVER = "m2-www.mywfg.com"
+# LOGIN_URL = "https://m2-www.mywfg.com/Users/Account/AccessDenied?ReturnUrl=%2f"
+# WELCOME_URL = "https://m2-www.mywfg.com"
+# ERROR_URL = "https://m2-www.mywfg.com/Users/Account/LogOn?ReturnUrl=%2F"
 PAGE_TITLE = "MyWFG"
 LOGIN_TITLE = "MyWFG - Log In"
 VALID_USER = "1708W"
-VALID_PASSWORD = "81u3$ky"
+VALID_PASSWORD = "lia1030c"
 PREF_USER_ID = "3163T"
 SUBMIT_LOGIN = "Log in"
 
