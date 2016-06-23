@@ -144,15 +144,18 @@ Click Button using value "${buttonvalue}"
 
 #*****************************************************
 
-Click Element with ID "${button_ID}" and class "${class}"
-
-    click element    xpath=//*[@id='${button_ID}'][@class='${class}']
+Click Element with ID "${elem_ID}" and class "${class}"
+    click element    xpath=//*[@id='${elem_ID}'][@class='${class}']
 
 #*****************************************************
 
-Click Element with ID "${button_ID}"
+Click Element with ID "${elem_ID}"
+    click element    xpath=//*[@id='${elem_ID}']
 
-    click element    xpath=//*[@id='${button_ID}']
+#*****************************************************
+
+Click Element with ID "${elem_ID}" using Javascript
+	execute javascript  document.getElementById('${elem_ID}').click()
 
 #*****************************************************
 
