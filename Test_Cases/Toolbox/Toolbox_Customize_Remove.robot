@@ -12,6 +12,9 @@ Library           ../../Resources/Testing_Library.py
 Library           Selenium2Library
 Suite Teardown    Close Browser
 
+*** Variables ***
+${button}=  get text  xpath=//div[2]/a[1]/div
+
 *** Test Cases ***
 Login to MyWFG.com
     Given browser is opened to login page
@@ -35,5 +38,10 @@ Click Yes to Delete
 	Then Wait "2" seconds
 	And Click Button named "Yes"
 
+Verify Item was Deleted
+	${deleted}=   get text  xpath=//div[3]/div/div/div[2]/a[1]/div
+	${deleted}=   convert to string  ${deleted}
+	${button}=  convert to string  ${button}
+	run keyword if  "${button}"=="${deleted}"     log  "Passed"
 
 *** Keywords ***

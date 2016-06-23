@@ -10,7 +10,7 @@ Resource          ../../Resources/Resource_Login.robot
 Resource          ../../Resources/Resource_Webpage.robot
 Library           ../../Resources/Testing_Library.py
 Library           Selenium2Library
-#Suite Teardown    Close Browser
+Suite Teardown    Close Browser
 
 *** Variables ***
 ${button}=  get text  xpath=//div[3]/div/div/div[2]/a[1]/span
