@@ -1,5 +1,6 @@
 # Login Variables
 BROWSER = "ff"
+FF_PROFILE = "C:/FF_Selenium"
 DELAY = 0
 SERVER = "www.mywfg.com"
 LOGIN_URL = "https://www.mywfg.com"
