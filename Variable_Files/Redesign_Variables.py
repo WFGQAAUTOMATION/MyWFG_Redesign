@@ -22,4 +22,5 @@ LL_LIC_PROVINCE = "SK"   #5 CA License Renewal
 LL_AFF_STATE = "NJ"      #7 Affiliation Renewal
 LL_LTCR_STATE = "CA"     #13 Long Term Care Renewal
 LL_License_ID = 4
+LL_STATE = "CA"
 
