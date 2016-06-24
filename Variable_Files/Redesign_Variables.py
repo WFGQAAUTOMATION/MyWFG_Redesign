@@ -1,4 +1,4 @@
-# Login Variables
+# Login Variables  www-03.mywfg.com
 BROWSER = "ff"
 FF_PROFILE = "C:/FF_Selenium"
 DELAY = 0

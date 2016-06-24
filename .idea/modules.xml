@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/../MyWFG_Model/.idea/MyWFG.iml" filepath="$PROJECT_DIR$/../MyWFG_Model/.idea/MyWFG.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/MyWFG_Redesign.iml" filepath="$PROJECT_DIR$/.idea/MyWFG_Redesign.iml" />
     </modules>
   </component>
 </project>

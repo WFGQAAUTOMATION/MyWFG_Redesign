@@ -21,10 +21,11 @@ Library           Testing_Library.py
 #${PREF_USER_ID}      3330T
 #${FF_PROFILE}         C:/Users/tcoffey/AppData/Roaming/Mozilla/Firefox/Profiles/97ie54aj.default-1426774614925
 #${FF_PROFILE}         C:/ff_profile
+
 *** Keywords ***
 
 Open Browser To Login Page
-    Open Browser    ${LOGIN_URL}    ${BROWSER}      #None    http://161.179.241.85:4444/wd/hub    ff_profile_dir=${FF_PROFILE}
+    Open Browser    ${LOGIN_URL}    ${BROWSER}      ff_profile_dir=${FF_PROFILE}
     Maximize Browser Window
     Set Selenium Speed    ${DELAY}
     Login Page Should Be Open
