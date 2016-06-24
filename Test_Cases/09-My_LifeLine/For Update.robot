@@ -1,7 +1,7 @@
 *** Settings ***
 Documentation     A test suite to verify MyWFG LifeLine Annuity Course Expiration dates
 ...               Author: Isabella Fayner
-...               Creation Date: 06/23/2016
+...               Creation Date: 06/24/2016
 ...
 ...               This test will log into MyWFG, go to My Business/My Lifeline and verify that MyWFG
 ...               LifeLine Annuity Course notification is displayed according to expiration dates

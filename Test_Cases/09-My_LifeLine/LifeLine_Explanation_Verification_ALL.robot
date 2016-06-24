@@ -64,11 +64,11 @@ Connect to Database and Select Agent
     ${html_ID}    Database_Library.Get_LifeLine_Explanation_Info    ${Agent_CodeNo}    ${Notification_ID}    ${STATE}
     ...    ${HOSTNAME}    ${WFG_DATABASE}
 
-    ${AgentNo_Length}=    Get Length    ${Agent_CodeNo}
-
     Set Suite Variable    ${Agent_CodeNo}
     Set Suite Variable    ${html_ID}
     Set Suite Variable    ${Notification_ID}
+
+    ${AgentNo_Length}=    Get Length    ${Agent_CodeNo}
 
     Run Keyword If    ${AgentNo_Length} > 4    Login to MyWFG.com, Open LifeLine and Get LifeLine Task Explanation
     ...    ELSE

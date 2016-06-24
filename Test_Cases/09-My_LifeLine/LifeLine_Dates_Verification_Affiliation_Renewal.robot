@@ -31,7 +31,7 @@ Select Agent and Login to MyWFG.com
     Browser is opened to login page
     User "${Agent_Info[0]}" logs in with password "${VALID_PASSWORD}"
     Home Page for any Agent Should Be Open
-    sleep   2s
+    sleep    2s
     Verify A Link Named "Business" Is On The Page
     sleep    2s
 

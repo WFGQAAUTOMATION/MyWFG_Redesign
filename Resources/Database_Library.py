@@ -395,6 +395,7 @@ def get_archived_datedue(archived_task_html_id, hostname, wfg_database):
 
 def lifeline_pcodes(notif_id, p_codes, p_compname, hostname, wfg_database):
     result = ""
+    x = " "
 
     str_sql = "SELECT ll.NotificationID, n.[Description], ll.DateDue, a.AgentCodeNumber, ll.NotificationSubType, \
               ll.NotificationTypeID, ll.Modified, ll.AgentID \
@@ -467,6 +468,7 @@ def lifeline_records_duplications(i_count, hostname, wfg_database):
 
 def lifeline_iul_annuity_yellow_notifications(notif_id1, notif_id2, hostname, wfg_database):
     result = ""
+    x = " "
 
     str_sql = "SELECT NotificationID, Description FROM wfgLU_Notification \
                WHERE NotificationID IN (%s, %s)" % (notif_id1, notif_id2)
