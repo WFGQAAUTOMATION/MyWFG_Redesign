@@ -3,3 +3,4 @@
 /.hg/dirstate
 /.hg
 ./idea
+/Resources/Testing_Library.pyc
