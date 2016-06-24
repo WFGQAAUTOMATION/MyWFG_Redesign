@@ -295,4 +295,13 @@ Elements should be equal ${Compare_Text} ${Webpage_Text}
 Zoom out to "${zoomLevel}" (percentage)
 	Execute javascript  document.body.style.zoom="${zoomLevel}"
 
+#*********************************************************************************
+
+Get Text Where ID Contains "${Element_ID}"
+    ${Text}=    Get Text    xpath=//*[contains(@id,'${Element_ID}')]
+    [Return]    ${Text}
+
+#**********************************************************************************
+
+
 

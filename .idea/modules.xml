@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/MyWFG.iml" filepath="$PROJECT_DIR$/.idea/MyWFG.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../MyWFG_Model/.idea/MyWFG.iml" filepath="$PROJECT_DIR$/../MyWFG_Model/.idea/MyWFG.iml" />
     </modules>
   </component>
 </project>

@@ -1,13 +1,15 @@
 *** Settings ***
-Documentation    A test suite to click MyWFG LifeLine Archive, verify Dismiss Reason and close Archive
+Documentation     A test suite to click MyWFG LifeLine Archive, verify Dismiss Reason and close Archive
+...               Author: Isabella Fayner
+...               Creation Date: 06/22/2016
 ...
-...               This test will log into MyWFG, click MyWFG Lifeline Archive link,
-...               verify Dismiss Reason and closes Archive
+...               This test will log into MyWFG, click My Business button, click My LifeLine, click
+...               Archive link, verify Dismiss Reason and closes Archive
 Metadata          Version   0.1
-Resource          ../../Resources/Resource_Login.robot
-Resource          ../../Resources/Resource_Webpage.robot
-Library           ../../Resources/Testing_Library.py
-Library           ../../Resources/Database_Library.py
+Resource          C:/Github_Projects/MyWFG_Redesign/Resources/Resource_Login.robot
+Resource          C:/Github_Projects/MyWFG_Redesign/Resources/Resource_Webpage.robot
+Library           C:/Github_Projects/MyWFG_Redesign/Resources/Testing_Library.py
+Library           C:/Github_Projects/MyWFG_Redesign/Resources/Database_Library.py
 Library           Selenium2Library
 Library           DatabaseLibrary
 Library           String
@@ -16,54 +18,76 @@ Library           DateTime
 Suite Teardown     Close Browser
 
 *** Variables ***
-#${DATABASE}     WFGOnline
-#${HOSTNAME}     CRDBCOMP03\\CRDBWFGOMOD
-${Notification_ID}    4
-${Dismiss_Index}      3
+
+${Notification_ID}    5
+${Dismiss_Index}      1
 ${Dismiss_Task}       Yes
 
 *** Test Cases ***
-#Connect to Database
-#    Connect To Database Using Custom Params    pymssql    host='${HOSTNAME}', database='${DATABASE}'
 
 Select Agent, Login to MyWFG.com, Check Dismiss Notifications
-    ${Agent_Info}    Database_Library.Get_lifeline_dismiss_notification_agent    ${Notification_ID}
+    ${Agent_Info}    Database_Library.Get_lifeline_dismiss_notification_agent    ${Notification_ID}   ${HOSTNAME}
+    ...    ${WFG_DATABASE}
+
+    ${Dismiss_Reason}    Database_Library.get_dismissed_reason    ${Dismiss_Index}    ${HOSTNAME}    ${WFG_DATABASE}
+
     Browser is opened to login page
     User "${Agent_Info[0]}" logs in with password "${VALID_PASSWORD}"
     Home Page for any Agent Should Be Open
     sleep   3s
-    Click element   xpath=//span[@class="ui-user-MyLifeline-notification-attachment-count"]
+    Verify A Link Named "Business" Is On The Page
+    sleep   3s
+
+    Set Suite Variable    ${Agent_Info}
+    Set Suite Variable    ${Dismiss_Reason}
+
+Click My Business button
+    Click Link with ID "myBusinessTabDesktop"
     sleep    2s
-    Click List Box With ID "selDismissReason-${Agent_Info[1]}" and select by index "${Dismiss_Index}"
 
-    Run Keyword If    ${Notification_ID} != 4 and ${Notification_ID} != 5 and ${Notification_ID} != 6 and ${Notification_ID} != 7
+Click My Life Line button
+    Click element using href "/Wfg.MyLifeline"
+    sleep    3s
+
+Click Archive Question Image using id
+    Click Link With Name Contained "?"
+    sleep    2s
+
+Verify Dismissed/Archived items
+    Run Keyword If    ${Notification_ID} not in [4, 5, 6, 7]
     ...    log    Dismiss Reason doesn't exist for LifeLine Task " & Parameter("NotificationID")
+    Run Keyword If    ${Notification_ID} in [4, 5, 6, 7] and '${Dismiss_Task}' == 'No'
+    ...    Confirm No to Dismiss for htmlID - ${Agent_Info[1]} and Dismiss Index - ${Dismiss_Index}
+    ...    ELSE IF    ${Notification_ID} in [4, 5, 6, 7] and '${Dismiss_Task}' == 'Yes'
+    ...    Confirm Yes to Dismiss for htmlID - ${Agent_Info[1]} and Dismiss Index - ${Dismiss_Index}
 
-    Run Keyword If    '${Dismiss_Task}' == 'No'
-    ...    Confirm No for Dismiss
-    ...    ELSE IF    '${Dismiss_Task}' == 'Yes'
-    ...    Confirm Yes for Dismiss
-
-Click Archive link
-     click link     xpath=//a[@id='linkArchive']
-
-Click Back link and Close Archive page
-    click link     xpath=//a[@id='linkBack']
+Click Archive Image
+    sleep    2s
+    Click Link with ID "linkArchive"
+    sleep    2s
 
 Log Out of MyWFG
     sleep    1s
     Log Out of MyWFG
 
-#Disconnect from SQL Server
-#    Disconnect From Database
-
 *** Keywords ***
-Confirm No for Dismiss
-    Click image where ID is "closeDisMissNotification"
+Confirm No to Dismiss for htmlID - ${htmlID} and Dismiss Index - ${Index}
+    Click Object Named "Select dismiss reason" with span name
+    sleep    1s
+    Show Hidden List Items with ID "selDismissReason-${Agent_Info[1]}"
+    Click Archive List Box With ID "selDismissReason-${Agent_Info[1]}" and select by index "${Dismiss_Index}"
+    Restore Hidden List Items with ID "selDismissReason-${Agent_Info[1]}"
+    sleep    2s
+    Click Element with ID "myModalPopup-close" and class "btn-wfg btn-gray two-column-btn-block"
     log    Dismiss_Task is No
 
-Confirm Yes for Dismiss
-    Click image where ID is "yesDisMissNotification"
+Confirm Yes to Dismiss for htmlID - ${htmlID} and Dismiss Index - ${Index}
     sleep    1s
-    Click image where ID is "close"
+    Show Hidden List Items with ID "selDismissReason-${Agent_Info[1]}"
+    Click Archive List Box With ID "selDismissReason-${Agent_Info[1]}" and select by index "${Dismiss_Index}"
+    Restore Hidden List Items with ID "selDismissReason-${Agent_Info[1]}"
+    sleep    2s
+    Click Element with ID "myModalPopup-close" and class "btn-wfg btn-primary two-column-btn-block"
+    sleep    1s
+    Click Element with ID "myModalPopup-close" and class "btn-wfg btn-primary btn-block"
     log    Dismiss_Task is Yes

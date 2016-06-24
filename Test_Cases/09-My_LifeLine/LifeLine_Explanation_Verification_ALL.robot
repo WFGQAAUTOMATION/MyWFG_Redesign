@@ -1,26 +1,25 @@
 *** Settings ***
-Documentation    A test suite to verify MyWFG LifeLine Explanation image
+Documentation     A test suite to verify MyWFG LifeLine Explanation image
+...               Author: Isabella Fayner
+...               Creation Date: 06/23/2016
 ...
-...               This test will log into MyWFG, clicks LifeLine task Explanation image and
-...               verifies the message of all Life Line IDs
+...               This test will log into MyWFG, go to My Business/My Lifeline, clicks LifeLine
+...               task Explanation image and verifies the message of all Life Line IDs
 Metadata          Version   0.1
-Resource          ../../Resources/Resource_Login.robot
-Resource          ../../Resources/Resource_Webpage.robot
-Library           ../../Resources/Testing_Library.py
-Library           ../../Resources/Database_Library.py
+Resource          C:/Github_Projects/MyWFG_Redesign/Resources/Resource_Login.robot
+Resource          C:/Github_Projects/MyWFG_Redesign/Resources/Resource_Webpage.robot
+Library           C:/Github_Projects/MyWFG_Redesign/Resources/Testing_Library.py
+Library           C:/Github_Projects/MyWFG_Redesign/Resources/Database_Library.py
 Library           Selenium2Library
 Library           DatabaseLibrary
 Library           String
 
-Suite Setup       Connect to SQL Server and Open Browser
+Suite Setup       Open Browser and Start Data Driven Test
 Test Setup        Go To Login Page
-Test Template     Select Agent, Login to MyWFG.com, click LifeLine image and get LifeLine task Information
-#Test Teardown     Log Out of MyWFG
-Suite Teardown    Close Browser and Disconnect from SQL Server
+Test Template     Connect to Database and Select Agent
+Suite Teardown    Close Browser and Finish Test
 
 *** Variables ***
-#${DATABASE}               WFGOnline
-#${HOSTNAME}               CRDBCOMP03\\CRDBWFGOMOD
 ${STATE}
 
 *** Test Cases ***                      NotificationID
@@ -53,45 +52,72 @@ FINRA Regulatory Education Course           26
 CA E&O Balance Due                          27
 
 *** Keywords ***
-Connect to SQL Server and Open Browser
-     Connect To Database Using Custom Params    pymssql    host='${HOSTNAME}', database='${WFG_DATABASE}'
-     Open Browser To Login Page
 
-Select Agent, Login to MyWFG.com, click LifeLine image and get LifeLine task Information
+Open Browser and Start Data Driven Test
+      Open Browser To Login Page
+
+Connect to Database and Select Agent
     [Arguments]    ${Notification_ID}
-    ${Agent_CodeNo}    Database_Library.Get_LifeLine_Explanation_Agent_ID    ${Notification_ID}
-    User "${Agent_CodeNo}" logs in with password "${VALID_PASSWORD}"
-    Then Home Page for any Agent Should Be Open
-    sleep    2s
-    Click element   xpath=//span[@class="ui-user-MyLifeline-notification-attachment-count"]
+    ${Agent_CodeNo}    Database_Library.Get_LifeLine_Explanation_Agent_ID    ${Notification_ID}    ${HOSTNAME}
+    ...    ${WFG_DATABASE}
+
     ${html_ID}    Database_Library.Get_LifeLine_Explanation_Info    ${Agent_CodeNo}    ${Notification_ID}    ${STATE}
+    ...    ${HOSTNAME}    ${WFG_DATABASE}
+
+    ${AgentNo_Length}=    Get Length    ${Agent_CodeNo}
+
+    Set Suite Variable    ${Agent_CodeNo}
+    Set Suite Variable    ${html_ID}
+    Set Suite Variable    ${Notification_ID}
+
+    Run Keyword If    ${AgentNo_Length} > 4    Login to MyWFG.com, Open LifeLine and Get LifeLine Task Explanation
+    ...    ELSE
+    ...    log    This LifeLine task doesn't exist
+
+Login to MyWFG.com, Open LifeLine and Get LifeLine Task Explanation
+    User "${Agent_CodeNo}" logs in with password "${VALID_PASSWORD}"
+    Home Page for any Agent Should Be Open
+    sleep    2s
+    Verify A Link Named "Business" Is On The Page
+    sleep    2s
+    Click Link with ID "myBusinessTabDesktop"
+    sleep    2s
+
+    Click element using href "/Wfg.MyLifeline"
+    sleep    2s
     #********* Click Question image next to Life Line task   ***********
-    Click image using img where ID is "QuestionMark-${html_ID}"
+    click element  xpath=.//*[@id='tr-${html_ID}']/td[1]/a[2]
+    sleep    1s
     Compare Life Line Explanation Messages    ${Notification_ID}
-    sleep    2s
-    Click image where ID is "close"
+    sleep    1s
     Log Out of MyWFG
-    sleep    2s
+    sleep    1s
 
 Compare Life Line Explanation Messages
     [Arguments]    ${Notification_ID}
     # ***********  Retrive Explanation description from database  *****************
-    ${SQL_Text}    query    SELECT Explanation FROM [WFGOnline].[dbo].[wfgLU_Notification] WHERE NotificationID = ${Notification_ID};
+    ${SQL_Text}    Database_Library.Get_LifeLine_Explanation_Description    ${Notification_ID}
+    ...    ${HOSTNAME}    ${WFG_DATABASE}
     # ***********  Replace &#8217 ASCI character to " ' " *************************
-    ${SQL_Text[0][0]}=    Replace String    ${SQL_Text[0][0]}    &#8217    '
+    ${SQL_Text}=    Replace String    ${SQL_Text}    &#8217    '
     # ***********  Remove </br> from Explanation String ***************************
-    ${SQL_Text[0][0]}=    Remove String    ${SQL_Text[0][0]}    </br>
+    ${SQL_Text}=    Remove String    ${SQL_Text}    </br>
     # ***********  Get Explanation description from Web page  *********************
-    ${Webpage_Text}    Get Text    xpath=//p[@id='messsageLabel']
+    ${Webpage_Text}=    Get Text Where ID Contains "popover"
     # ***********  Replace ’ character with ' in order to compare explanations ****
     ${Webpage_Text}=    Replace String    ${Webpage_Text}    ’    '
     # ***********  Remove <br> from Explanation String  ***************************
     ${Webpage_Text}=    Remove String    ${Webpage_Text}    <br>
+    # ***********  Remove <br/> from Explanation String  **************************
+    ${Webpage_Text}=    Remove String    ${Webpage_Text}    <br/>
     # ***********  Verify the text of explanantion  *******************************
-    Run Keyword And Continue On Failure    Should be equal    ${SQL_Text[0][0]}    ${Webpage_Text}
+    Run Keyword If    ${Notification_ID} == 12
+    ...    Run Keyword And Continue On Failure    Should Contain     ${Webpage_Text}    ${SQL_Text}
+    Run Keyword If    ${Notification_ID} != 12
+    ...    Run Keyword And Continue On Failure    Should be equal    ${Webpage_Text}    ${SQL_Text}
 
-Close Browser and Disconnect from SQL Server
+Close Browser and Finish Test
     Close Browser
-    Disconnect From Database
+
 
 
