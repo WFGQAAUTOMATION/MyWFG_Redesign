@@ -55,3 +55,14 @@ Click on My Team Element, Select Team from Team Listbox, Then Verify Results
 	Then run keyword if  ${team} == 'Terminated'   element should be visible   xpath=//*[@id='hierarchyDataTable']//span[contains(text(),'1')]
 	And Click Link with ID "myTeam-back-btn"
 	Then Wait "5" Seconds
+
+browser is opened to login page
+	Open Browser
+	...     ${LOGIN_URL}
+	...     browser=${Browser}
+	...     alias=None
+	...     remote_url=http://161.179.241.85:4444/wd/hub
+	...     ff_profile_dir=${FF_PROFILE}
+    Maximize Browser Window
+    Set Selenium Speed    ${DELAY}
+    Login Page Should Be Open
