@@ -8,19 +8,9 @@ Library           Selenium2Library
 Library           Testing_Library.py
 Library           OperatingSystem
 
-
 *** Variables ***
-#${SERVER}            m-www.mywfg.com
-#${BROWSER}           ff
-#${DELAY}             0
-#${VALID USER}        1200W
-#${VALID PASSWORD}    81u3$ky
-#${LOGIN URL}         https://${SERVER}/Users/Account/AccessDenied?ReturnUrl=%2f
-#${WELCOME URL}       https://${SERVER}/
-#${ERROR URL}         https://${SERVER}/Users/Account/LogOn?ReturnUrl=%2F
 
 *** Keywords ***
-
 #*****************************************************
 #*****************************************************
 ######   NAVIGATION  ######
