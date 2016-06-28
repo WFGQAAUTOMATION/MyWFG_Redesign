@@ -58,6 +58,11 @@ Click Redesigned Menu
 
 #*****************************************************
 
+Click My Team
+	click element    xpath=//span[contains(text(),'My team')]
+
+#*****************************************************
+
 Scroll Page to Location
     [Arguments]    ${x_location}    ${y_location}
     Execute JavaScript    window.scrollTo(${x_location},${y_location})

@@ -30,12 +30,6 @@ Login to MyWFG.com
     Verify A Link Named "Profile" Is On The Page
     sleep    2s
 
-#Go to My Profile Page
-#    Click My Profile
-#    sleep    2s
-#    Click Link with ID "myProfile"
-#    sleep    2s
-
 Go to My Profile Page
     Go To My Profile
     sleep    2s

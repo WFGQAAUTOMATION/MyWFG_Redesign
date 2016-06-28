@@ -56,7 +56,6 @@ Change Associate Contact Home Address
     sleep    1s
 
 Change Associate Contact State by Name
-#    Click Element   //*[@id='contactEditView']/div/div[2]/span
      Show Hidden List Items with ID "ddlStates"
      sleep    1s
      Select From List by label  xpath=//select[@id='ddlStates']  ${STATE}
