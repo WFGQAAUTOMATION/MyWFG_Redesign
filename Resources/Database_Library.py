@@ -14,6 +14,7 @@ def connect_to_database(str_sql, hostname, wfg_database):
     conn.close()
     return rows
 
+
 def convert_the_date(str_date):
     # *** use "strip" method for "Trim" function to eliminate leading and ending spaces ***
     str_date = str(str_date).strip()
@@ -249,12 +250,36 @@ def get_state_description(state_code, hostname, wfg_database):
     return state
 
 
+def insert_temp_agent(agent_id, notif_id, state_code, notif_type_id, date_due, modified, url, hostname, wfg_database):
+    state_name = ""
+    if len(state_code)> 0:
+        state_name = get_state_description(state_code, hostname, wfg_database)
+        print "State - " + state_name
+    conn = pyodbc.connect("DRIVER={SQL Server};SERVER=" + hostname + ";DATABASE=" + wfg_database + ";Trusted_Connection=True")
+    cursor = conn.cursor()
+    if notif_id == "11":
+        print "notif_id = ", notif_id
+        cursor.execute("INSERT INTO [WFGOnline].[dbo].[WFGLLNotifications] VALUES \
+          (%s, %s, '%s', %s, NULL, '%s', %s)" %(agent_id, notif_id, state_name, notif_type_id, modified, url))
+    elif notif_id == "12":
+        print "notif_id = ", notif_id
+        cursor.execute("INSERT INTO [WFGOnline].[dbo].[WFGLLNotifications] VALUES \
+            (%s, %s, '%s', %s, NULL, NULL, %s)" % (agent_id, notif_id, state_name, notif_type_id, url))
+    else:
+        print "notif_id from else = ", notif_id
+        cursor.execute("INSERT INTO [WFGOnline].[dbo].[WFGLLNotifications] VALUES \
+            (%s,%s,'%s',%s,'%s','%s',%s)" % (agent_id, notif_id, state_name, notif_type_id, date_due, modified, url))
+
+    conn.commit()
+    conn.close()
+
+
 def lifeline_green_notifications(icount, hostname, wfg_database):
     result = ""
     x = " "
     conn = pyodbc.connect("DRIVER={SQL Server};SERVER=" + hostname + ";DATABASE=" + wfg_database + ";Trusted_Connection=True")
     cursor = conn.cursor()
-    print "LL " + "Description" + 39*x + "Modified " + " AgentID " + "Line Explanation"
+    print "LL " + "Description" + 39*x + "Line Explanation"
     for i_param in range(icount+1):
         cursor.execute("SELECT ll.NotificationID, n.[Description], ll.DateDue, a.AgentCodeNumber,  \
              ll.NotificationSubType, ll.NotificationTypeID, ll.AgentID, ll.Modified \
@@ -395,6 +420,7 @@ def get_archived_datedue(archived_task_html_id, hostname, wfg_database):
 
 def lifeline_pcodes(notif_id, p_codes, p_compname, hostname, wfg_database):
     result = ""
+    x = " "
 
     str_sql = "SELECT ll.NotificationID, n.[Description], ll.DateDue, a.AgentCodeNumber, ll.NotificationSubType, \
               ll.NotificationTypeID, ll.Modified, ll.AgentID \
@@ -467,11 +493,13 @@ def lifeline_records_duplications(i_count, hostname, wfg_database):
 
 def lifeline_iul_annuity_yellow_notifications(notif_id1, notif_id2, hostname, wfg_database):
     result = ""
+    x = " "
 
     str_sql = "SELECT NotificationID, Description FROM wfgLU_Notification \
                WHERE NotificationID IN (%s, %s)" % (notif_id1, notif_id2)
     ll_rows = connect_to_database(str_sql, hostname, wfg_database)
 
+    print "LL " + "Description" + 20 * x + "Agent No"
     for row1 in ll_rows:
         str_sql = "SELECT ll.NotificationID, n.[Description], ll.DateDue, a.AgentCodeNumber, ll.NotificationSubType, \
                    ll.NotificationTypeID, ll.Modified, ll.AgentID \

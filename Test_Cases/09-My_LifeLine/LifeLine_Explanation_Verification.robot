@@ -6,10 +6,10 @@ Documentation     A test suite to verify MyWFG LifeLine Explanation image
 ...               This test will log into MyWFG, go to My Business/My Lifeline, clicks LifeLine
 ...               task Explanation image and verifies the message for one chosen Life Line ID
 Metadata          Version   0.1
-Resource          C:/Github_Projects/MyWFG_Redesign/Resources/Resource_Login.robot
-Resource          C:/Github_Projects/MyWFG_Redesign/Resources/Resource_Webpage.robot
-Library           C:/Github_Projects/MyWFG_Redesign/Resources/Testing_Library.py
-Library           C:/Github_Projects/MyWFG_Redesign/Resources/Database_Library.py
+Resource          ../../Resources/Resource_Login.robot
+Resource          ../../Resources/Resource_Webpage.robot
+Library           ../../Resources/Testing_Library.py
+Library           ../../Resources/Database_Library.py
 Library           Selenium2Library
 Library           DatabaseLibrary
 Library           String
