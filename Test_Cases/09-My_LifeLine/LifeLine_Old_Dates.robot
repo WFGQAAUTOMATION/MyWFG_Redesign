@@ -1,5 +1,7 @@
 *** Settings ***
 Documentation     A test suite to find LifeLine records with old dates excluding AML records
+...               Author: Isabella Fayner
+...               Creation Date: 06/27/2016
 ...
 ...               This test will connect to database and searches MywFG LifeLine records
 ...               with old dates excluding AML records
@@ -9,13 +11,11 @@ Library           Selenium2Library
 Library           DatabaseLibrary
 
 *** Variables ***
-${LL_2}      2      # AML Renewal - US
-${LL_3}      3      # AML Renewal - CA
-${LL_9}      9      # AML Course - US
-${LL_10}    10      # AML Course - CA
-
+${LL_Exclude}    2,3,9,10      # AML Renewal - US, AML Renewal - CA, AML Course - US, AML Course - CA
 
 *** Test Cases ***
-Connect from Python file
-    ${mydata}   Database_Library.Count_Total_Notifications
-    Database_Library.LifeLine_Old_Dates    ${mydata}   ${LL_2}    ${LL_3}    ${LL_9}    ${LL_10}
+Get LifeLine Old Dates
+
+    ${mydata}   Database_Library.Count_Total_Notifications    ${HOSTNAME}    ${WFG_DATABASE}
+
+    Database_Library.LifeLine_Old_Dates    ${mydata}   ${LL_Exclude}    ${HOSTNAME}    ${WFG_DATABASE}

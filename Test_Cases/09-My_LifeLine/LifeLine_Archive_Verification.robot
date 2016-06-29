@@ -6,10 +6,11 @@ Documentation     A test suite to view archived notifications and verify Dismiss
 ...               This test will log into MyWFG, click My Business button, click My LifeLine, click
 ...               Archive link, verify  dismissed notifications and Dismiss Dates, and closes Archive
 Metadata          Version   0.1
-Resource          C:/Github_Projects/MyWFG_Redesign/Resources/Resource_Login.robot
-Resource          C:/Github_Projects/MyWFG_Redesign/Resources/Resource_Webpage.robot
-Library           C:/Github_Projects/MyWFG_Redesign/Resources/Testing_Library.py
-Library           C:/Github_Projects/MyWFG_Redesign/Resources/Database_Library.py
+*** Settings ***
+Resource          ../../Resources/Resource_Login.robot
+Resource          ../../Resources/Resource_Webpage.robot
+Library           ../../Resources/Testing_Library.py
+Library           ../../Resources/Database_Library.py
 Library           Selenium2Library
 Library           DatabaseLibrary
 Library           String
@@ -91,7 +92,7 @@ Confirm No to Dismiss for htmlID - ${htmlID} and Dismiss Index - ${Index}
     Click Archive List Box With ID "selDismissReason-${Agent_Info[1]}" and select by index "${Dismiss_Index}"
     Restore Hidden List Items with ID "selDismissReason-${Agent_Info[1]}"
     sleep    2s
-    Click Element with ID "myModalPopup-close" and class "btn-wfg btn-gray two-column-btn-block"
+    Click Element with class "btn-wfg btn-gray two-column-btn-block" and ID "myModalPopup-close"
     log    Dismiss_Task is No
 
 Confirm Yes to Dismiss for htmlID - ${htmlID} and Dismiss Index - ${Index}
@@ -100,9 +101,9 @@ Confirm Yes to Dismiss for htmlID - ${htmlID} and Dismiss Index - ${Index}
     Click Archive List Box With ID "selDismissReason-${Agent_Info[1]}" and select by index "${Dismiss_Index}"
     Restore Hidden List Items with ID "selDismissReason-${Agent_Info[1]}"
     sleep    2s
-    Click Element with ID "myModalPopup-close" and class "btn-wfg btn-primary two-column-btn-block"
+    Click Element with class "btn-wfg btn-primary two-column-btn-block" and ID "myModalPopup-close"
     sleep    1s
-    Click Element with ID "myModalPopup-close" and class "btn-wfg btn-primary btn-block"
+    Click Element with class "btn-wfg btn-primary btn-block" and ID "myModalPopup-close"
     log    Dismiss_Task is Yes
 
 Verify Archived Task for htmlID ${htmlID} and Dismiss Reason ${Dismiss_Reason}

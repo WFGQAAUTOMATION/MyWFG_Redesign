@@ -1,8 +1,10 @@
 *** Settings ***
-Documentation    A test suite to verify MyWFG LifeLine Explanation image
+Documentation    A test suite to verify MyWFG LifeLine Links for all Lire Line tasks
+...               Author: Isabella Fayner
+...               Creation Date: 06/27/2016
 ...
-...               This test will log into MyWFG, clicks LifeLine task Explanation image and
-...               verifies the message of all Life Line IDs
+...               This test will log into MyWFG, clicks MyWFG Lifeline and
+...               verifies all MyWFG LifeLine Link together
 Metadata          Version   0.1
 Resource          ../../Resources/Resource_Login.robot
 Resource          ../../Resources/Resource_Webpage.robot
@@ -12,15 +14,12 @@ Library           Selenium2Library
 Library           DatabaseLibrary
 Library           String
 
-Suite Setup       Connect to SQL Server and Open Browser
-Test Setup        Go To Login Page
-Test Template     Select Agent, Login to MyWFG.com, click LifeLine image and get LifeLine task Information
-#Test Teardown     Log Out of MyWFG
-Suite Teardown    Close Browser and Disconnect from SQL Server
+#Suite Setup      Open Browser and Start Data Driven Test
+Test Template     Connect to Database and Select Agent
+Suite Teardown    Close Browser and Finish Test
 
 *** Variables ***
-${DATABASE}               WFGOnline
-${HOSTNAME}               CRDBCOMP03\\CRDBWFGOMOD
+
 ${STATE}
 
 *** Test Cases ***                      NotificationID
@@ -53,28 +52,47 @@ FINRA Regulatory Education Course           26
 CA E&O Balance Due                          27
 
 *** Keywords ***
-Connect to SQL Server and Open Browser
-     Connect To Database Using Custom Params    pymssql    host='${HOSTNAME}', database='${DATABASE}'
-     Open Browser To Login Page
+#Open Browser and Start Data Driven Test
+#     Open Browser To Login Page
 
-Select Agent, Login to MyWFG.com, click LifeLine image and get LifeLine task Information
+Connect to Database and Select Agent
+    Open Browser To Login Page
     [Arguments]    ${Notification_ID}
     ${Agent_CodeNo}    Database_Library.Get_LifeLine_Explanation_Agent_ID    ${Notification_ID}
-    User "${Agent_CodeNo}" logs in with password "${PASSWORD}"
-    Home Page for any Agent Should Be Open
-#    ***** Temporarely commented for DEV testing
-    sleep    2s
-    Click element   xpath=//span[@class="ui-user-MyLifeline-notification-attachment-count"]
-    ${html_ID}    Database_Library.Get_LifeLine_Link_html_Id    ${Agent_CodeNo}    ${Notification_ID}    ${STATE}
+    ...    ${HOSTNAME}    ${WFG_DATABASE}
 
+    ${html_ID}    Database_Library.Get_LifeLine_Link_html_Id    ${Agent_CodeNo}    ${Notification_ID}    ${STATE}
+    ...    ${HOSTNAME}    ${WFG_DATABASE}
+
+    Set Suite Variable    ${Agent_CodeNo}
+    Set Suite Variable    ${html_ID}
+    Set Suite Variable    ${Notification_ID}
+
+    ${AgentNo_Length}=    Get Length    ${Agent_CodeNo}
+
+    Run Keyword If    ${AgentNo_Length} > 4    Login to MyWFG.com, Open LifeLine and Click LifeLine link
+    ...    ELSE
+    ...    log    This LifeLine task doesn't exist
+
+Login to MyWFG.com, Open LifeLine and Click LifeLine link
+    User "${Agent_CodeNo}" logs in with password "${VALID_PASSWORD}"
+    Home Page for any Agent Should Be Open
+    sleep    2s
+    Verify A Link Named "Business" Is On The Page
+    sleep    2s
+    Click Link with ID "myBusinessTabDesktop"
+    sleep    2s
+    Click element using href "/Wfg.MyLifeline"
+    sleep    2s
     #********************* Click Life Line Link  *********************
     Click Link With ID "Notice-${html_ID}"
     sleep    2s
     Log Out of MyWFG
     sleep    2s
-
-Close Browser and Disconnect from SQL Server
     Close Browser
-    Disconnect From Database
+
+Close Browser and Finish Test
+    Close Browser
+
 
 
