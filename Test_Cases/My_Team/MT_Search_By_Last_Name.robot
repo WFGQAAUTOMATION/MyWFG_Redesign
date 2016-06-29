@@ -22,10 +22,12 @@ Login to MyWFG.com
 	And Click My Team
 
 Enter Last Name and Click Search
+	Then Wait "5" Seconds
 	Then input "ESCOBEDO" in the "hierarchyLastNameField" field
 	And Click Button named "Search"
 
 Verify Results List
+	Then Wait "5" Seconds
 	Then Element "ESCOBEDO" Should Be Present
 
 *** Keywords ***

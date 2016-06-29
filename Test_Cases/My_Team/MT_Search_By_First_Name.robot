@@ -18,14 +18,16 @@ Login to MyWFG.com
     When user "${VALID_USER}" logs in with password "${VALID_PASSWORD}"
     Then Home Page Should Be Open
     And Verify A Link Named "Profile" Is On The Page
-    Then Wait "2" Seconds
+    Then Wait "5" Seconds
 	And Click My Team
 
 Enter First Name and Click Search
+	Then Wait "5" Seconds
 	Then input "MARIA" in the "hierarchyFirstNameField" field
 	And Click Button named "Search"
 
 Verify Results List
+	Then Wait "5" Seconds
 	Then Element "MARIA" Should Be Present
 
 *** Keywords ***

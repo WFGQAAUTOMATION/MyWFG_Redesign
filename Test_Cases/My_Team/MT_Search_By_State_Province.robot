@@ -36,6 +36,7 @@ Enter State or Province and Click Search
 	And Click Button named "Search"
 
 Verify Results List
+	Then Wait "5" Seconds
 	Then element should be visible      xpath=//*[@id='hierarchyDataTable']//div[contains(text(),'11HLY')]
 
 *** Keywords ***

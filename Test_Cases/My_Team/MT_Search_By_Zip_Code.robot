@@ -22,10 +22,12 @@ Login to MyWFG.com
 	And Click My Team
 
 Enter Zip Code and Click Search
+	Then Wait "5" Seconds
 	Then input "91789" in the "zipField" field
 	And Click Button named "Search"
 
 Verify Results List
+	Then Wait "5" Seconds
 	Then Then element should be visible      xpath=//*[@id='hierarchyDataTable']//div[contains(text(),'11HLY')]
 
 *** Keywords ***

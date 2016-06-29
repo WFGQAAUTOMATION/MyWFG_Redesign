@@ -22,10 +22,12 @@ Login to MyWFG.com
 	And Click My Team
 
 Enter Agent Code and Click Search
+	Then Wait "5" Seconds
 	Then input "124KKC" in the "codeField" field
 	And Click Button named "Search"
 
 Verify Results List
+	Then Wait "5" Seconds
 	Then Element "MARIA VICTORIA" Should Be Present
 
 *** Keywords ***

@@ -22,10 +22,12 @@ Login to MyWFG.com
 	And Click My Team
 
 Enter City and Click Search
+	Then Wait "5" Seconds
 	Then input "WALNUT" in the "cityField" field
 	And Click Button named "Search"
 
 Verify Results List
+	Then Wait "5" Seconds
 	Then Then element should be visible      xpath=//*[@id='hierarchyDataTable']//div[contains(text(),'11HLY')]
 
 *** Keywords ***
