@@ -139,7 +139,7 @@ Click Button using value "${buttonvalue}"
 
 #*****************************************************
 
-Click Element with ID "${elem_ID}" and class "${class}"
+Click Element with class "${class}" and ID "${elem_ID}"
     click element    xpath=//*[@id='${elem_ID}'][@class='${class}']
 
 #*****************************************************

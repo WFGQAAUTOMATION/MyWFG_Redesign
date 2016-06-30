@@ -6,9 +6,9 @@ Documentation     A test suite to click MyWFG LifeLine Archive, verify the messa
 ...               This test will log into MyWFG, click My Business button, click My LifeLine,
 ...               click Archive link, verify the message and close Archive
 Metadata          Version   0.1
-Resource          C:/Github_Projects/MyWFG_Redesign/Resources/Resource_Login.robot
-Resource          C:/Github_Projects/MyWFG_Redesign/Resources/Resource_Webpage.robot
-Library           C:/Github_Projects/MyWFG_Redesign/Resources/Testing_Library.py
+Resource          ../../Resources/Resource_Login.robot
+Resource          ../../Resources/Resource_Webpage.robot
+Library           ../../Resources/Testing_Library.py
 Library           Selenium2Library
 Library           DatabaseLibrary
 

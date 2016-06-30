@@ -6,16 +6,15 @@ Documentation     A test suite to verify MyWFG LifeLine Explanation image
 ...               This test will log into MyWFG, go to My Business/My Lifeline, clicks LifeLine
 ...               task Explanation image and verifies the message of all Life Line IDs
 Metadata          Version   0.1
-Resource          C:/Github_Projects/MyWFG_Redesign/Resources/Resource_Login.robot
-Resource          C:/Github_Projects/MyWFG_Redesign/Resources/Resource_Webpage.robot
-Library           C:/Github_Projects/MyWFG_Redesign/Resources/Testing_Library.py
-Library           C:/Github_Projects/MyWFG_Redesign/Resources/Database_Library.py
+Resource          ../../Resources/Resource_Login.robot
+Resource          ../../Resources/Resource_Webpage.robot
+Library           ../../Resources/Testing_Library.py
+Library           ../../Resources/Database_Library.py
 Library           Selenium2Library
 Library           DatabaseLibrary
 Library           String
 
-Suite Setup       Open Browser and Start Data Driven Test
-Test Setup        Go To Login Page
+#Suite Setup      Open Browser and Start Data Driven Test
 Test Template     Connect to Database and Select Agent
 Suite Teardown    Close Browser and Finish Test
 
@@ -52,11 +51,13 @@ FINRA Regulatory Education Course           26
 CA E&O Balance Due                          27
 
 *** Keywords ***
-
-Open Browser and Start Data Driven Test
-      Open Browser To Login Page
+#Open Browser and Start Data Driven Test
+#      Open Browser To Login Page
 
 Connect to Database and Select Agent
+    Close Browser
+    sleep    1s
+    Open Browser To Login Page
     [Arguments]    ${Notification_ID}
     ${Agent_CodeNo}    Database_Library.Get_LifeLine_Explanation_Agent_ID    ${Notification_ID}    ${HOSTNAME}
     ...    ${WFG_DATABASE}
@@ -64,11 +65,11 @@ Connect to Database and Select Agent
     ${html_ID}    Database_Library.Get_LifeLine_Explanation_Info    ${Agent_CodeNo}    ${Notification_ID}    ${STATE}
     ...    ${HOSTNAME}    ${WFG_DATABASE}
 
-    ${AgentNo_Length}=    Get Length    ${Agent_CodeNo}
-
     Set Suite Variable    ${Agent_CodeNo}
     Set Suite Variable    ${html_ID}
     Set Suite Variable    ${Notification_ID}
+
+    ${AgentNo_Length}=    Get Length    ${Agent_CodeNo}
 
     Run Keyword If    ${AgentNo_Length} > 4    Login to MyWFG.com, Open LifeLine and Get LifeLine Task Explanation
     ...    ELSE
@@ -82,16 +83,17 @@ Login to MyWFG.com, Open LifeLine and Get LifeLine Task Explanation
     sleep    2s
     Click Link with ID "myBusinessTabDesktop"
     sleep    2s
-
     Click element using href "/Wfg.MyLifeline"
     sleep    2s
+
     #********* Click Question image next to Life Line task   ***********
     click element  xpath=.//*[@id='tr-${html_ID}']/td[1]/a[2]
     sleep    1s
     Compare Life Line Explanation Messages    ${Notification_ID}
     sleep    1s
     Log Out of MyWFG
-    sleep    1s
+    sleep    2s
+    Close Browser
 
 Compare Life Line Explanation Messages
     [Arguments]    ${Notification_ID}
@@ -103,6 +105,7 @@ Compare Life Line Explanation Messages
     # ***********  Remove </br> from Explanation String ***************************
     ${SQL_Text}=    Remove String    ${SQL_Text}    </br>
     # ***********  Get Explanation description from Web page  *********************
+    sleep    1s
     ${Webpage_Text}=    Get Text Where ID Contains "popover"
     # ***********  Replace ’ character with ' in order to compare explanations ****
     ${Webpage_Text}=    Replace String    ${Webpage_Text}    ’    '

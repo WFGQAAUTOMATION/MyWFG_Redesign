@@ -6,10 +6,10 @@ Documentation     A test suite to verify MyWFG LifeLine License Renewal Expirati
 ...               This test will log into MyWFG, go to My Business/My Lifeline and verify that MyWFG
 ...               LifeLine License Renewal notification is displayed according to expiration dates
 Metadata          Version   0.1
-Resource          C:/Github_Projects/MyWFG_Redesign/Resources/Resource_Login.robot
-Resource          C:/Github_Projects/MyWFG_Redesign/Resources/Resource_Webpage.robot
-Library           C:/Github_Projects/MyWFG_Redesign/Resources/Testing_Library.py
-Library           C:/Github_Projects/MyWFG_Redesign/Resources/Database_Library.py
+Resource          ../../Resources/Resource_Login.robot
+Resource          ../../Resources/Resource_Webpage.robot
+Library           ../../Resources/Testing_Library.py
+Library           ../../Resources/Database_Library.py
 Library           Selenium2Library
 Library           DatabaseLibrary
 Library           String
@@ -24,6 +24,17 @@ ${Notification_TypeID}    1
 
 Select Agent and Login to MyWFG.com
 
+    ${Agent_Info}=    Run Keyword If    ${LL_License_ID} == 4
+    ...    Database_Library.Find_LifeLine_Agent    ${LL_License_ID}    ${Notification_TypeID}    ${LL_LIC_STATE}
+    ...    ${HOSTNAME}    ${WFG_DATABASE}
+    ...    ELSE IF    ${LL_License_ID} == 5
+    ...    Database_Library.Find_LifeLine_Agent    ${LL_License_ID}    ${Notification_TypeID}    ${LL_LIC_PROVINCE}
+    ...    ${HOSTNAME}    ${WFG_DATABASE}
+
+    ${AgentNo}=    Get Length    ${Agent_Info[0]}
+
+    Run Keyword If    ${AgentNo} < 4    Insert Temp Record Into LL_Notifications Table
+    sleep    2s
     ${Agent_Info}=    Run Keyword If    ${LL_License_ID} == 4
     ...    Database_Library.Find_LifeLine_Agent    ${LL_License_ID}    ${Notification_TypeID}    ${LL_LIC_STATE}
     ...    ${HOSTNAME}    ${WFG_DATABASE}
@@ -85,3 +96,14 @@ Log Out of MyWFG
     Log Out of MyWFG
 
 *** Keywords ***
+
+Insert Temp Record Into LL_Notifications Table
+
+#******* This record will be inserted if there is no data for a specific Life Line task.
+#******* It will be deleted within 1 hour when "WFG Notifications" job runs in Model.
+    Run Keyword If    ${LL_License_ID} == 4
+    ...    Database_Library.Insert_Temp_Agent    ${Agent_ID}    ${Notification_ID}    ${LL_LIC_STATE}
+    ...    ${Notification_TypeID}    ${Date_Due}    ${Modified}    ${URL}    ${HOSTNAME}    ${WFG_DATABASE}
+    ...    ELSE IF    ${LL_License_ID} == 5
+    ...    Database_Library.Insert_Temp_Agent    ${Agent_ID}    ${Notification_ID}    ${LL_LIC_PROVINCE}
+    ...    ${Notification_TypeID}    ${Date_Due}    ${Modified}    ${URL}    ${HOSTNAME}    ${WFG_DATABASE}
