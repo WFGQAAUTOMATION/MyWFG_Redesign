@@ -27,7 +27,7 @@ Enter Agent Code and Click Search
 	And Click Button named "Search"
 
 Verify Results List
-	Then Wait "5" Seconds
+	Then Wait "10" Seconds
 	Then Element "MARIA VICTORIA" Should Be Present
 
 *** Keywords ***
