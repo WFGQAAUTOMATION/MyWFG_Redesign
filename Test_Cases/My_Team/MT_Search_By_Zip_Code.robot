@@ -10,7 +10,7 @@ Resource          ../../Resources/Resource_Login.robot
 Resource          ../../Resources/Resource_Webpage.robot
 Library           ../../Resources/Testing_Library.py
 Library           Selenium2Library
-Suite Teardown    Close Browser
+#Suite Teardown    Close Browser
 
 *** Test Cases ***
 Login to MyWFG.com
@@ -28,8 +28,9 @@ Enter Zip Code and Click Search
 
 Verify Results List
 	Then Wait "5" Seconds
-	Then Then element should be visible      xpath=//*[@id='hierarchyDataTable']//div[contains(text(),'11HLY')]
-
+	Then element should be visible      xpath=//*[@id='hierarchyDataTable']//div[contains(text(),'11HLY')]
+	Then Wait "2" Seconds
+	
 *** Keywords ***
 browser is opened to login page
 	Open Browser
