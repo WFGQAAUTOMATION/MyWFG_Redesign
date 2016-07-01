@@ -79,3 +79,13 @@ Log Out of MyWFG
     Log Out of MyWFG
 
 *** Keywords ***
+browser is opened to login page
+	Open Browser
+	...     ${LOGIN_URL}
+	...     browser=${Browser}
+	...     alias=None
+	...     remote_url=http://161.179.241.85:4444/wd/hub
+	...     ff_profile_dir=${FF_PROFILE}
+    Maximize Browser Window
+    Set Selenium Speed    ${DELAY}
+    Login Page Should Be Open

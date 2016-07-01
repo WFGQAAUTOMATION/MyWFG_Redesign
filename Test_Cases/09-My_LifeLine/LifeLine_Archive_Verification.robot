@@ -113,3 +113,14 @@ Verify Archived Task for htmlID ${htmlID} and Dismiss Reason ${Dismiss_Reason}
     Find "${Date_and_Reason}" On Webpage
     ${Webpage_Text}    Get Text    xpath=//*[@id='ArchiveDate-${htmlID}']
     Elements should be equal ${Date_and_Reason} ${Webpage_Text}
+
+browser is opened to login page
+	Open Browser
+	...     ${LOGIN_URL}
+	...     browser=${Browser}
+	...     alias=None
+	...     remote_url=http://161.179.241.85:4444/wd/hub
+	...     ff_profile_dir=${FF_PROFILE}
+    Maximize Browser Window
+    Set Selenium Speed    ${DELAY}
+    Login Page Should Be Open
