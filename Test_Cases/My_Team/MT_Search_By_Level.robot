@@ -62,6 +62,7 @@ Click on My Team Element, Select Level from Level Listbox, Then Verify Results
 	Then run keyword if  ${level} == 'EMD'  element should be visible      xpath=//*[@id='hierarchyDataTable']//div[contains(text(),'EMD')]
 	Then run keyword if  ${level} == 'CEO'  element should be visible      xpath=//*[@id='hierarchyDataTable']//div[contains(text(),'CEO')]
 	Then run keyword if  ${level} == 'EMC'  element should be visible      xpath=//*[@id='hierarchyDataTable']//div[contains(text(),'EVC')]
+	Then Wait "5" Seconds
 	And Click Link with ID "myTeam-back-btn"
 	Then Wait "5" Seconds
 
