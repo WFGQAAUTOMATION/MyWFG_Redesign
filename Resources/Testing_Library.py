@@ -78,7 +78,7 @@ def get_lifeline_archived_description(dismiss_reason):
         month = month[1:2]
     day = current_date[3:5]
     if day[0] == "0":
-        day = day[4:5]
+        day = day[1:2]
     year = current_date[6:]
     current_date = month + "/" + day + "/" + year
     result = current_date + " (Dismissed -" + dismiss_reason + ")"

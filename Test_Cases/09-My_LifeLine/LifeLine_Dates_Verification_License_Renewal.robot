@@ -98,7 +98,6 @@ Log Out of MyWFG
 *** Keywords ***
 
 Insert Temp Record Into LL_Notifications Table
-
 #******* This record will be inserted if there is no data for a specific Life Line task.
 #******* It will be deleted within 1 hour when "WFG Notifications" job runs in Model.
     Run Keyword If    ${LL_License_ID} == 4
@@ -107,3 +106,4 @@ Insert Temp Record Into LL_Notifications Table
     ...    ELSE IF    ${LL_License_ID} == 5
     ...    Database_Library.Insert_Temp_Agent    ${Agent_ID}    ${Notification_ID}    ${LL_LIC_PROVINCE}
     ...    ${Notification_TypeID}    ${Date_Due}    ${Modified}    ${URL}    ${HOSTNAME}    ${WFG_DATABASE}
+    sleep    3s
