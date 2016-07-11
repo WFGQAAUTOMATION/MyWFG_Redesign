@@ -19,6 +19,10 @@ Suite Teardown     Close Browser
 
 *** Variables ***
 ${Notification_TypeID}    1
+${Agent_ID}               919824
+${Date_Due}               2016-12-31 11:22:33.444
+${Modified}               2016-07-01 12:34:56.789
+${URL}                    1
 
 *** Test Cases ***
 

@@ -84,11 +84,10 @@ Login to MyWFG.com, Open LifeLine and Get LifeLine Task Explanation
     Click Link with ID "myBusinessTabDesktop"
     sleep    2s
     Click element using href "/Wfg.MyLifeline"
-    sleep    2s
-
+    sleep    3s
     #********* Click Question image next to Life Line task   ***********
-    click element  xpath=.//*[@id='tr-${html_ID}']/td[1]/a[2]
-    sleep    1s
+    click element  xpath=.//*[@id='QuestionMark-${html_ID}']
+    sleep    3s
     Compare Life Line Explanation Messages    ${Notification_ID}
     sleep    1s
     Log Out of MyWFG

@@ -48,7 +48,7 @@ Click My Life Line button
     Click element using href "/Wfg.MyLifeline"
     sleep    3s
     #********* Click Question image next to Life Line task   ***********
-    click element  xpath=.//*[@id='tr-${html_ID}']/td[1]/a[2]
+    click element  xpath=.//*[@id='QuestionMark-${html_ID}']
     sleep    2s
 
 Compare Life Line Explanation Messages
@@ -62,7 +62,6 @@ Compare Life Line Explanation Messages
 
     # ***********  Get Explanation description from Web page  *********************
     ${Webpage_Text}=    Get Text Where ID Contains "popover"
-
     # ***********  Replace ’ character with ' in order to compare explanations ****
     ${Webpage_Text}=    Replace String    ${Webpage_Text}    ’    '
     # ***********  Remove <br> from Explanation String  ***************************
