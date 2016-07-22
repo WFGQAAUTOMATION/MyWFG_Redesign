@@ -55,7 +55,7 @@ Click on My Team Element, Select Team from Team Listbox, Then Verify Results
 	Then run keyword if  ${team} == 'Terminated'   element should be visible   xpath=//*[@id='hierarchyDataTable']//span[contains(text(),'1')]
 	Then Wait "5" Seconds
 	And Click Link with ID "myTeam-back-btn"
-	Then Wait "5" Seconds
+	Then Wait "10" Seconds
 
 browser is opened to login page
 	Open Browser
