@@ -10,7 +10,7 @@ Resource          ../../Resources/Resource_Login.robot
 Resource          ../../Resources/Resource_Webpage.robot
 Library           ../../Resources/Testing_Library.py
 Library           Selenium2Library
-Suite Setup       Login to MyWFG.com
+#Suite Setup       Login to MyWFG.com
 Test Setup        Show Hidden List Items with ID "selBaseType"
 Test Template     Click on My Team Element, Select Team from Team Listbox, Then Verify Results
 #Test Teardown     Restore Hidden List Items with ID "selBaseType"
