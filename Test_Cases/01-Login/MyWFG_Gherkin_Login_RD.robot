@@ -23,12 +23,11 @@ Valid Login - Click Menu Item
     When user "${VALID_USER}" logs in with password "${VALID_PASSWORD}"
     Then Home Page Should Be Open
     Then Click Redesigned Menu
-    And Wait "5" Seconds
 
-    ${welcome}=     element should be visible  xpath=//*[@class="hopscotch-title"]
-    Then run keyword if   ${welcome}  click element  css=button.hopscotch-bubble-close.hopscotch-close
+#    And Wait "5" Seconds
+#    ${welcome}=    get text   xpath=//*[@class="hopscotch-title"]
+#    Then run keyword if   ${welcome}  click element  css=button.hopscotch-bubble-close.hopscotch-close
 
-#    Then Click Element  css=button.hopscotch-bubble-close.hopscotch-close
     Then Wait "5" Seconds
     And Click Link Named "Events & Recognition"
 	Then Wait "5" Seconds
