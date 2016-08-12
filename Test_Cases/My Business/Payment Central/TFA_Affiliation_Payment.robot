@@ -1,8 +1,9 @@
 *** Settings ***
-Documentation     The purpose of this test suite is to choose E&O payment option on the Payment Central,
-...               add item to the shopping cart and subscribe the agent with E&O balance
+Documentation     The purpose of this test suite is to choose TFA Affiliation option on the
+...               Payment Central, add item to the shopping cart and make a payment for the
+...               agent witth TFA Affiliation balance
 ...               Author: Isabella Fayner
-...               Creation Date: 06/30/2016
+...               Creation Date: 08/08/2016
 ...
 ...               This test will log into MyWFG, click My Business button, click Admin, click Payment Central,
 ...               click E&O Payment and subscribe for E&O recurring payments for the agent with E&O balance
@@ -25,8 +26,8 @@ Suite Teardown    Close Browser
 Select Agent, Login to MyWFG.com, Verify Business Link
 # ***** Get specific Agent ID based on todays day in order to prevent duplications *****
     ${Today_Date}    Get Current Date
-    ${Agent_Info}    Database_Library.Select_EO_Agent_With_Balance    ${EO_Country}    ${Today_Date}
-    ...    ${WF_HOSTNAME}    ${WF_DATABASE}    ${COMP_HOSTNAME}    ${COMP_DATABASE}
+    ${Agent_Info}    Database_Library.Select_TFA_Affiliation_Agent    ${Today_Date}
+    ...    ${COMP_HOSTNAME}    ${COMP_DATABASE}
 
     Browser is opened to login page
     User "${Agent_Info}" logs in with password "${VALID_PASSWORD}"
@@ -49,13 +50,13 @@ Click Payment Central link
     Click Link With Name Contained "Payment Central"
     sleep    2s
 
-Click E&O Payment Element
-    Click Element with ID "Wfg-EOPayment"
+Click TFA Affiliation Element
+    Click Element with ID "Wfg-TfaAffiliationPayment"
     sleep    2s
 
-Click Authorize and Add to Cart Button
-    Click Button using id "enoAddCart2"
-    sleep    3s
+Click Add to Cart Button
+    Click Element with ID "AddBalanceToCart"
+    sleep    2s
 
 Click View Cart Button and Click Close Button
     Show Hidden List Items with ID "hidPaymentType"

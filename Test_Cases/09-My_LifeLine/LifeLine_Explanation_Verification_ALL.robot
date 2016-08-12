@@ -89,7 +89,7 @@ Login to MyWFG.com, Open LifeLine and Get LifeLine Task Explanation
     click element  xpath=.//*[@id='QuestionMark-${html_ID}']
     sleep    3s
     Compare Life Line Explanation Messages    ${Notification_ID}
-    sleep    1s
+    sleep    2s
     Log Out of MyWFG
     sleep    2s
     Close Browser
@@ -104,7 +104,7 @@ Compare Life Line Explanation Messages
     # ***********  Remove </br> from Explanation String ***************************
     ${SQL_Text}=    Remove String    ${SQL_Text}    </br>
     # ***********  Get Explanation description from Web page  *********************
-    sleep    1s
+    sleep    2s
     ${Webpage_Text}=    Get Text Where ID Contains "popover"
     # ***********  Replace ’ character with ' in order to compare explanations ****
     ${Webpage_Text}=    Replace String    ${Webpage_Text}    ’    '

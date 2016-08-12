@@ -1,11 +1,11 @@
 *** Settings ***
-Documentation     The purpose of this test suite is to choose E&O payment option on the Payment Central,
-...               add item to the shopping cart and subscribe the agent with E&O balance
+Documentation     The purpose of this test suite is to choose E&O payment option on the Payment Central
+...               and make outstanding E&O balance one time payment
 ...               Author: Isabella Fayner
-...               Creation Date: 06/30/2016
+...               Creation Date: 07/13/2016
 ...
 ...               This test will log into MyWFG, click My Business button, click Admin, click Payment Central,
-...               click E&O Payment and subscribe for E&O recurring payments for the agent with E&O balance
+...               click E&O Payment and make E&O balance one time payment
 Metadata          Version   0.1
 Resource          ../../../Resources/Resource_Login.robot
 Resource          ../../../Resources/Resource_Webpage.robot
@@ -53,9 +53,13 @@ Click E&O Payment Element
     Click Element with ID "Wfg-EOPayment"
     sleep    2s
 
-Click Authorize and Add to Cart Button
-    Click Button using id "enoAddCart2"
-    sleep    3s
+Click One Time Payment Radio Button
+    Click Element with ID "rbSignUpFalse"
+    sleep    2s
+
+Click Add to Cart Button
+    Click Button using id "enoAddCart"
+    sleep    2s
 
 Click View Cart Button and Click Close Button
     Show Hidden List Items with ID "hidPaymentType"
@@ -114,7 +118,6 @@ Log Out of MyWFG
 
 Close opened Browser
     Close Browser
-
 
 *** Keywords ***
 

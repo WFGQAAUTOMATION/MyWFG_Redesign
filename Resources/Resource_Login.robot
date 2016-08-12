@@ -25,7 +25,7 @@ Library           Testing_Library.py
 *** Keywords ***
 
 Open Browser To Login Page
-    Open Browser    ${LOGIN_URL}    ${BROWSER}      ff_profile_dir=${FF_PROFILE}
+    Open Browser    ${LOGIN_URL}    ${BROWSER}    ff_profile_dir=${FF_PROFILE}
     Maximize Browser Window
     Set Selenium Speed    ${DELAY}
     Login Page Should Be Open
@@ -82,6 +82,7 @@ Browser is opened to login page
 User "${username}" logs in with password "${password}"
     Input username    ${username}
     Input password    ${password}
+    sleep    5s
     Submit credentials
 
 #*****************************************************

@@ -552,13 +552,14 @@ def select_agent_id(agent_id, hostname, wfg_database):
 
 
 def select_eo_agent_without_balance(country, current_date, wf_hostname, wf_database):
-
     result = ""
     day = ""
     package_id = ""
     current_day = current_date[8:]
     if current_day[0] == "0":
          current_day = current_day[1:2]
+    else:
+        current_day = current_day[0:2]
 
     if country == "US":
          package_id = 15
@@ -573,7 +574,43 @@ def select_eo_agent_without_balance(country, current_date, wf_hostname, wf_datab
         AND LEFT(AgentID, 2) >= '%s' AND AgentID NOT IN \
         (SELECT a.AgentID FROM [WFGOnline].[dbo].[regRegistration] r \
         INNER JOIN  [WFGOnline].[dbo].[regAgentInfo] a ON r.AgentInfoID=a.AgentInfoID \
-        WHERE r.PackageID = '%s' AND Status ='N') ORDER BY AgentID" % (country, current_day, package_id)
+        WHERE r.PackageID = '%s' AND Status ='N') AND AgentID NOT IN \
+        (SELECT s.CreatedBy FROM [CRDBCOMP03\CRDBWFGOMOD].[WFGECommerce].[dbo].peShoppingCart s \
+        INNER JOIN [CRDBCOMP03\CRDBWFGOMOD].[WFGOnlineCMS].[dbo].Wfg_PaymentEngine_PaymentSourcePartRecord p \
+        ON p.Source = s.Source \
+        WHERE s.Created > (GETDATE()-1) AND ItemCode IS NOT NULL) \
+        ORDER BY AgentID" % (country, current_day, package_id)
+
+    rows = connect_to_database(str_sql, wf_hostname, wf_database)
+    if rows:
+        for row in rows:
+            result = row[0]
+            print "Result - " + str(result)
+    return result
+
+
+def select_eo_agent_to_unsubscribe(country, current_date, wf_hostname, wf_database, data_refresh_date):
+    result = ""
+    package_id = ""
+
+    current_day = current_date[8:]
+    if current_day[0] == "0":
+        current_day = current_day[1:2]
+    else:
+        current_day = current_day[0:2]
+
+    if country == "US":
+        package_id = 15
+    elif country == "CA":
+        package_id = 16
+    elif country == "PR":
+        package_id = 20
+
+    str_sql = "SELECT TOP 1 a.AgentID as AgentCodeNumber, r.PackageID, r.Status, r.StartDate \
+        FROM [CRDBCOMP03\CRDBWFGOMOD].[WFGOnline].[dbo].[regRegistration] r \
+        INNER JOIN [CRDBCOMP03\CRDBWFGOMOD].[WFGOnline].[dbo].[regAgentInfo] a ON r.AgentInfoID=a.AgentInfoID \
+        WHERE r.PackageID = '%s' AND r.StartDate >= '%s' AND r.Status = 'N' \
+        ORDER BY a.AgentID, r.StartDate desc " % (package_id, data_refresh_date)
 
     rows = connect_to_database(str_sql, wf_hostname, wf_database)
     if rows:
@@ -589,11 +626,13 @@ def select_eo_agent_with_balance(country, current_date, wf_hostname, wf_database
     package_id = 0
     cycle_typeid = ""
     company_string = ""
-    max_date = "2016-05-19"
+    max_date = ""
 
     current_day = current_date[8:]
     if current_day[0] == "0":
         current_day = current_day[1:2]
+    else:
+        current_day = current_day[0:2]
 
     if country == "US":
         package_id = 15
@@ -611,7 +650,7 @@ def select_eo_agent_with_balance(country, current_date, wf_hostname, wf_database
     # Get the latest Cycle date
     str_sql = "SELECT MAX(CycleDate) as MaxCycleDate FROM [CRDBCOMP03\CRDBCOMPMOD].[Compass].[dbo].[cmCycle] \
               WHERE CycleStatusID = 2 AND CycleTypeID = %s " % cycle_typeid
-    # rows = connect_to_database(str_sql, wf_hostname, wf_database)
+
     rows = connect_to_database(str_sql, comp_hostname, comp_database)
     if rows:
         for row in rows:
@@ -624,13 +663,21 @@ def select_eo_agent_with_balance(country, current_date, wf_hostname, wf_database
         AND c.CompanyCodeNumber IN (%s) \
         INNER JOIN [CRDBCOMP03\CRDBCOMPMOD].[Compass].[dbo].[agAgent] a ON a.AgentID = bh.AgentID \
         INNER JOIN [CRDBCOMP03\CRDBCOMPMOD].[Compass].[dbo].[agAgentCycleType] act ON act.AgentID = bh.AgentID \
-        INNER JOIN[CRDBCOMP03\CRDBCOMPMOD].[Compass].[dbo].[luCycleTypeStatus] lu ON lu.CycleTypeStatusID = act.CycleTypeStatusID \
+        INNER JOIN[CRDBCOMP03\CRDBCOMPMOD].[Compass].[dbo].[luCycleTypeStatus] lu \
+        ON lu.CycleTypeStatusID = act.CycleTypeStatusID \
         WHERE act.CycleTypeID IN ('%s') AND lu.CycleTypeStatus = 'A' AND act.StartDate <= GETDATE() \
         AND act.EndDate >= GETDATE() AND bh.CycleDate = '%s' AND bh.EndingAccountBalance < 0 \
         AND LEFT(a.AgentCodeNumber, 2)> = '%s' AND a.AgentCodeNumber NOT IN \
         (SELECT a.AgentID FROM [CRDBCOMP03\CRDBWFGOMOD].[WFGOnline].[dbo].[regRegistration] r \
         INNER JOIN  [CRDBCOMP03\CRDBWFGOMOD].[WFGOnline].[dbo].[regAgentInfo] a ON r.AgentInfoID=a.AgentInfoID \
         WHERE r.PackageID = %s AND Status ='N') \
+        AND a.AgentCodeNumber NOT IN \
+        (SELECT Agent_ID FROM [CRDBCOMP03\CRDBWFGOMOD].[WFGOnline].[dbo].[EO_AgentPayments]) \
+        AND a.AgentCodeNumber NOT IN (SELECT s.CreatedBy FROM \
+        [CRDBCOMP03\CRDBWFGOMOD].[WFGECommerce].[dbo].peShoppingCart s \
+        INNER JOIN [CRDBCOMP03\CRDBWFGOMOD].[WFGOnlineCMS].[dbo].Wfg_PaymentEngine_PaymentSourcePartRecord p \
+        ON p.Source = s.Source \
+        WHERE s.Created > (GETDATE()-1) AND ItemCode IS NOT NULL) \
         ORDER BY a.AgentCodeNumber, c.CompanyCodeNumber, bh.EndingAccountBalance, \
         bh.CycleDate desc " % (company_string, cycle_typeid, max_date, current_day, package_id)
 
@@ -641,3 +688,51 @@ def select_eo_agent_with_balance(country, current_date, wf_hostname, wf_database
             print "Result - " + str(result)
     return result
 
+
+def select_tfa_affiliation_agent (current_date, comp_hostname, comp_database):
+    result = ""
+    current_day = ""
+    max_date = ""
+
+    current_day = current_date[8:]
+    if current_day[0] == "0":
+        current_day = current_day[1:2]
+    else:
+        current_day = current_day[0:2]
+
+    # Get the latest Cycle date
+    str_sql = "SELECT MAX(CycleDate) as MaxCycleDate FROM [CRDBCOMP03\CRDBCOMPMOD].[Compass].[dbo].[cmCycle] \
+                 WHERE CycleStatusID = 2 AND CycleTypeID = 1"
+
+    rows = connect_to_database(str_sql, comp_hostname, comp_database)
+    if rows:
+        for row in rows:
+            max_date = row[0]
+            print "Max Date - " + str(max_date)
+
+    str_sql = "SELECT TOP 1 a.AgentCodeNumber, bh.EndingAccountBalance, c.CompanyCodeNumber, c.CompanyName \
+           FROM [CRDBCOMP03\CRDBCOMPMOD].[Compass].[dbo].[VHcmBalanceHistory] bh \
+           INNER JOIN [CRDBCOMP03\CRDBCOMPMOD].[Compass].[dbo].[cmCompany] c ON c.CompanyID = bh.CompanyID \
+           AND c.CompanyCodeNumber IN ('P01190') \
+           INNER JOIN [CRDBCOMP03\CRDBCOMPMOD].[Compass].[dbo].[agAgent] a ON a.AgentID = bh.AgentID \
+           INNER JOIN [CRDBCOMP03\CRDBCOMPMOD].[Compass].[dbo].[agAgentCycleType] act ON act.AgentID = bh.AgentID \
+           INNER JOIN[CRDBCOMP03\CRDBCOMPMOD].[Compass].[dbo].[luCycleTypeStatus] lu ON lu.CycleTypeStatusID = act.CycleTypeStatusID \
+           WHERE act.CycleTypeID IN ('1') AND lu.CycleTypeStatus = 'A' AND act.StartDate <= GETDATE() \
+           AND act.EndDate >= GETDATE() AND bh.CycleDate = '%s' AND bh.EndingAccountBalance < 0 \
+           AND LEFT(a.AgentCodeNumber, 2)> = '%s' \
+           AND a.AgentCodeNumber NOT IN \
+           (SELECT Agent_ID FROM [CRDBCOMP03\CRDBWFGOMOD].[WFGOnline].[dbo].[EO_AgentPayments]) \
+           AND a.AgentCodeNumber NOT IN (SELECT s.CreatedBy FROM \
+           [CRDBCOMP03\CRDBWFGOMOD].[WFGECommerce].[dbo].peShoppingCart s \
+           INNER JOIN [CRDBCOMP03\CRDBWFGOMOD].[WFGOnlineCMS].[dbo].Wfg_PaymentEngine_PaymentSourcePartRecord p \
+           ON p.Source = s.Source \
+           WHERE s.Created > (GETDATE()-1) AND ItemCode IS NOT NULL) \
+           ORDER BY a.AgentCodeNumber, c.CompanyCodeNumber, bh.EndingAccountBalance, \
+           bh.CycleDate desc " % (max_date, current_day)
+
+    rows = connect_to_database(str_sql, comp_hostname, comp_database)
+    if rows:
+        for row in rows:
+            result = row[0]
+            print "Result - " + str(result)
+    return result

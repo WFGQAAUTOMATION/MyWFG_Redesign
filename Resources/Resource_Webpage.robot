@@ -144,7 +144,18 @@ Click Button using value "${buttonvalue}"
 
 #*****************************************************
 
+Click Element with class "${class}"
+    click element    xpath=//*[@class='${class}']
+
+#*****************************************************
+
 Click Element with class "${class}" and ID "${elem_ID}"
+    click element    xpath=//*[@id='${elem_ID}'][@class='${class}']
+
+#*****************************************************
+# 08/04/16 This is the same keyword as keyword above, but id idn't work properly,
+# upper keyword "Click Element with class "${class}" " was called instead
+Click Element using class "${class}" and ID "${elem_ID}"
     click element    xpath=//*[@id='${elem_ID}'][@class='${class}']
 
 #*****************************************************
@@ -158,6 +169,12 @@ Click Element with ID "${elem_ID}" using Javascript
 	execute javascript  document.getElementById('${elem_ID}').click()
 
 #*****************************************************
+
+Click Element Where ID Contains "${Element_ID}"
+
+    click element    xpath=//*[contains(@id,'${Element_ID}')]
+
+#********************************************************
 
 Click Element using href "${href}"
     click link    xpath=//a[contains(@href, '${href}')]
