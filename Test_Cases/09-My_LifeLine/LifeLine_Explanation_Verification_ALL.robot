@@ -34,7 +34,7 @@ AML Course - US                             9
 AML Course - CA                             10
 IUL Course                                  11
 Annuity Course                              12
-Long Term Care Renewal                      13
+#Long Term Care Renewal                      13
 TFG New IAR Training Course                 14
 2015 TFA Firm Element Supervisor            15
 2015 TFA Firm Element RR                    16
