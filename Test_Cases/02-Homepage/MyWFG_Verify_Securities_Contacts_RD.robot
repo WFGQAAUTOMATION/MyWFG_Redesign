@@ -20,7 +20,7 @@ Navigate to Securities Home Office Contacts
 Find Text On Webpage
     And Find "WFG Securities of Canada" On Webpage
     And Find "416.225.2121" On Webpage
-    And Find "TFG Managers" On Webpage
+#    And Find "TFG Managers" On Webpage
 
 Log Out
     Then log out of mywfg
