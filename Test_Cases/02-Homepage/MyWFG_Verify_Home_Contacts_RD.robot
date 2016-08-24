@@ -27,7 +27,7 @@ Check Info on Home Office Contacts page
     And Find "Home Office Contacts" On Webpage
     And Find "770.246.9889" On Webpage
     And Find "416.225.2121" On Webpage
-    And Find "678.474.4208" On Webpage
+#    And Find "678.474.4208" On Webpage
 
 Log Out and Close Browser
     Then log out of mywfg
