@@ -28,6 +28,7 @@ Open Browser To Login Page
     Open Browser    ${LOGIN_URL}    ${BROWSER}      ff_profile_dir=${FF_PROFILE}
     Maximize Browser Window
     Set Selenium Speed    ${DELAY}
+    sleep  4
     Login Page Should Be Open
 
 #*****************************************************
@@ -56,7 +57,8 @@ Input Password
 #*****************************************************
 
 Submit Credentials
-    Click Button    ${SUBMIT_LOGIN}
+#    Click Button    xpath=//button[contains(text(),'${SUBMIT_LOGIN}')]
+	click button    xpath=//button[@id="btnLogin"]
 
 #*****************************************************
 
